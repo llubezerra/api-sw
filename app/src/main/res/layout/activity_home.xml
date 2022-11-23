@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray"
+    tools:context=".activity.HomeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_logo"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:background="@drawable/bg_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="124dp"
+            android:layout_height="53dp"
+            android:layout_marginHorizontal="135dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/splash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/krungthep"
+        android:text="@string/choose_your_side"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@+id/cl_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMenuList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="37dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        android:overScrollMode="never" />
+
+        <TextView
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/krungthep"
+            android:text="@string/powered"
+            android:textAlignment="center"
+            android:textColor="@color/light_gray"
+            android:background="@color/black_000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="17dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
