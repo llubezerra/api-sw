@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="83dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_items_search">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_image"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/icon_circle_starship"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/icon_in_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:src="@drawable/starship_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/name"
+        android:textColor="@color/dark_gray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/cl_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/crew"
+        android:textColor="@color/dark_gray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/cl_image"
+        app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+    <TextView
+        android:id="@+id/text_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/passengers"
+        android:textColor="@color/dark_gray"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/cl_image"
+        app:layout_constraintTop_toBottomOf="@id/text_2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

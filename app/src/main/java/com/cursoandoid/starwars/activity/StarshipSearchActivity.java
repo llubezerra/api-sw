@@ -28,6 +28,9 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame, fragment);
+
+            fragment.saveContext(this);
+
             transaction.commit();
             //sumir o search
             binding.clSearch.setVisibility(View.GONE);

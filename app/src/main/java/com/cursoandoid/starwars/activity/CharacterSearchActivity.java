@@ -1,6 +1,5 @@
 package com.cursoandoid.starwars.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -36,7 +35,7 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
             fragment.saveContext(this);
 
             transaction.commit();
-            //sumir o search
+            //sumir o search na mensagem de erro --> implementar
             binding.clSearch.setVisibility(View.GONE);
         });
     }

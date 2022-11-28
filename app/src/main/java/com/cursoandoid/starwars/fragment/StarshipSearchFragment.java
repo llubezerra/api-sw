@@ -1,14 +1,33 @@
 package com.cursoandoid.starwars.fragment;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.cursoandoid.starwars.GetDataService;
 import com.cursoandoid.starwars.R;
+import com.cursoandoid.starwars.adapter.AdapterSearch;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
+import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.Starships;
+import com.cursoandoid.starwars.network.RetrofitClientInstance;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,15 +77,75 @@ public class StarshipSearchFragment extends Fragment {
     }
 
     // POR ORA SÓ ESTOU USANDO ESSE
+    Context context;
+    ProgressDialog progressDialog;
+
     protected FragmentDefaultSearchBinding binding;
+    private AdapterSearch adapter;
+
+    private Integer count;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FragmentDefaultSearchBinding.inflate(getLayoutInflater());
-        //setContentView(binding.getRoot());
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_default_search, container, false);
+        binding = FragmentDefaultSearchBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        callApi();
+
+        binding.textResults.setText(getString(R.string.results, count));
+    }
+
+    public void saveContext(Context context) {
+        this.context = context;
+    }
+
+    /*Method to generate List of data using RecyclerView with custom adapter*/
+    private void generateDataList(List<Starship> starshipList) {
+        adapter = new AdapterSearch(context, starshipList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        binding.recyclerSearchList.setLayoutManager(layoutManager);
+        binding.recyclerSearchList.setAdapter(adapter);
+        count = adapter.getItemCount();
+    }
+
+    private void callApi(){
+        // Create handle for the RetrofitInstance interface
+        //ENTRAR NA TELA ABRIR TUDO
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Starships> call = service.getAllStarships();
+        call.enqueue(new Callback<Starships>() {
+            @Override
+            public void onResponse(Call<Starships> call, Response<Starships> response) {
+                progressDialog.dismiss();
+                if(response.body() != null) {
+                    generateDataList(response.body().getResults());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Starships> call, Throwable t) {
+                //visible gone pro costraint
+                Log.d("LOG", "onFailure: " + t.getMessage());
+                progressDialog.dismiss();
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
 }
