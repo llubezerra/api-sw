@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.GetDataService;
 import com.cursoandoid.starwars.R;
-import com.cursoandoid.starwars.adapter.AdapterSearch;
+import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
 import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.model.Starships;
@@ -81,7 +81,7 @@ public class StarshipSearchFragment extends Fragment {
     ProgressDialog progressDialog;
 
     protected FragmentDefaultSearchBinding binding;
-    private AdapterSearch adapter;
+    private AdapterStarshipSearch adapter;
 
     private Integer count;
 
@@ -99,6 +99,8 @@ public class StarshipSearchFragment extends Fragment {
         binding = FragmentDefaultSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        binding.textResults.setText(getString(R.string.results, count));
+
         return view;
     }
 
@@ -106,8 +108,6 @@ public class StarshipSearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         callApi();
-
-        binding.textResults.setText(getString(R.string.results, count));
     }
 
     public void saveContext(Context context) {
@@ -116,16 +116,17 @@ public class StarshipSearchFragment extends Fragment {
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<Starship> starshipList) {
-        adapter = new AdapterSearch(context, starshipList);
+        adapter = new AdapterStarshipSearch(context, starshipList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        count = adapter.getItemCount();
+        Integer count2 = adapter.getItemCount();
+        System.out.println(count2 + "adapter");
     }
 
     private void callApi(){
         // Create handle for the RetrofitInstance interface
-        //ENTRAR NA TELA ABRIR TUDO
+        // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Starships> call = service.getAllStarships();
         call.enqueue(new Callback<Starships>() {
@@ -134,6 +135,8 @@ public class StarshipSearchFragment extends Fragment {
                 progressDialog.dismiss();
                 if(response.body() != null) {
                     generateDataList(response.body().getResults());
+                    count = response.body().getCount();
+                    System.out.println(count);
                 }
             }
 

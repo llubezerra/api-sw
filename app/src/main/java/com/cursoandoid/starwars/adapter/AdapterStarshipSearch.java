@@ -15,12 +15,12 @@ import com.cursoandoid.starwars.model.Starship;
 
 import java.util.List;
 
-public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.MyViewHolder> {
+public class AdapterStarshipSearch extends RecyclerView.Adapter<AdapterStarshipSearch.MyViewHolder> {
 
     private List<Starship> dataList;
     private Context context;
 
-    public AdapterSearch(Context context, List<Starship> dataList){
+    public AdapterStarshipSearch(Context context, List<Starship> dataList){
         this.context = context;
         this.dataList = dataList;
     }
@@ -45,7 +45,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemSearchList = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_search, parent, false);
+                .inflate(R.layout.adapter_default_search, parent, false);
         return new MyViewHolder(itemSearchList);
 
     }
@@ -54,8 +54,8 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         // 2 formatos no mesmo textView
-        holder.textName.setText(context.getString(R.string.name, dataList.get(position).getName()));
-        holder.text2.setText(HtmlCompat.fromHtml(context.getString(R.string.crew, dataList.get(position).getCrew()), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        holder.textName.setText(HtmlCompat.fromHtml(context.getString(R.string.name, dataList.get(position).getName()), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        holder.text2.setText(HtmlCompat.fromHtml(context.getString(R.string.crew, dataList.get(position).getCrew()), HtmlCompat.FROM_HTML_MODE_COMPACT));
         holder.text3.setText(HtmlCompat.fromHtml(context.getString(R.string.passengers, dataList.get(position).getPassengers()), HtmlCompat.FROM_HTML_MODE_LEGACY));
 
     }

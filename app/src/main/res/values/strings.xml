@@ -26,10 +26,10 @@
     <string name="russian">RUSSO</string>
 
     <!-- Fragment -->
-    <string name="results"><b>Resultados:</b> %d</string>
-    <string name="name"><b>Nome:</b> %s</string>
-    <string name="crew"><b>Tripulação:</b> %s</string>
-    <string name="passengers"><b>Passageiros:</b> %s</string>
-    <string name="height"><b>Altura:</b> %d</string>
-    <string name="eyes_color"><b>Cor dos olhos:</b> %s</string>
+    <string name="results">Resultados: %d</string>
+    <string name="name"><![CDATA[<b>Nome:</b>]]> %s</string>
+    <string name="crew"><![CDATA[<b>Tripulação:</b>]]> %s</string>
+    <string name="passengers"><![CDATA[<b>Passageiros:</b>]]> %s</string>
+    <string name="height"><![CDATA[<b>Altura:</b>]]> %s</string>
+    <string name="eyes_color"><![CDATA[<b>Cor dos olhos:</b>]]> %s</string>
 </resources>

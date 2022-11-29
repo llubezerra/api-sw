@@ -1,52 +1,116 @@
 package com.cursoandoid.starwars.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.cursoandoid.starwars.GetDataService;
 import com.cursoandoid.starwars.R;
+import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
+import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
+import com.cursoandoid.starwars.model.Character;
+import com.cursoandoid.starwars.model.Characters;
+import com.cursoandoid.starwars.network.RetrofitClientInstance;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CharacterSearchFragment extends Fragment {
     Context context;
+
+    ProgressDialog progressDialog;
+
+    protected FragmentDefaultSearchBinding binding;
+    private AdapterCharacterSearch adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_default_search, container, false);
+        binding = FragmentDefaultSearchBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        // Search elements on view, wich is xml fragment_default_search
-        ConstraintLayout cl = view.findViewById(R.id.cl_image);
-        cl.setBackground(ContextCompat.getDrawable(context, R.drawable.icon_circle_person));
-
-        ImageView image = view.findViewById(R.id.icon_in_circle);
-        image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.person));
-
-        TextView textName = view.findViewById(R.id.text_name);
-
-        TextView text2 = view.findViewById(R.id.text_2);
-        // 2 formatos no mesmo textView
-        text2.setText(HtmlCompat.fromHtml(getString(R.string.height, 123), HtmlCompat.FROM_HTML_MODE_LEGACY));
-
-        TextView text3 = view.findViewById(R.id.text_3);
-        text3.setText(getString(R.string.eyes_color, "mock"));
-        //binding.nlInstallmentsQuantity.setText(getString(R.string.pix_installments_options_current_quantity, String.valueOf(quantity)));
+        setupValues();
+        //String.valueOf(quantity);
 
         return view;
+    }
+    
+    private void setupValues() {
+
+
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        callApi();
     }
 
     public void saveContext(Context context){
         this.context = context;
+    }
+
+    /*Method to generate List of data using RecyclerView with custom adapter*/
+    private void generateDataList(List<Character> characterList) {
+        adapter = new AdapterCharacterSearch(context, characterList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        binding.recyclerSearchList.setLayoutManager(layoutManager);
+        binding.recyclerSearchList.setAdapter(adapter);
+        Integer count2 = adapter.getItemCount();
+        System.out.println(count2 + "adapter");
+    }
+
+    private void callApi(){
+        // Create handle for the RetrofitInstance interface
+        // ENTRAR NA TELA ABRIR TUDO
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Characters> call = service.getAllCharacters();
+        call.enqueue(new Callback<Characters>() {
+            @Override
+            public void onResponse(Call<Characters> call, Response<Characters> response) {
+                progressDialog.dismiss();
+                if(response.body() != null) {
+                    generateDataList(response.body().getResults());
+                    Integer count = response.body().getCount();
+                    System.out.println(count);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Characters> call, Throwable t) {
+                //visible gone pro costraint
+                Log.d("LOG", "onFailure: " + t.getMessage());
+                progressDialog.dismiss();
+                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 }
