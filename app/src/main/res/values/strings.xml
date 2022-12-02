@@ -25,6 +25,10 @@
     <string name="english">INGLÊS</string>
     <string name="russian">RUSSO</string>
 
+    <string name="choose_wisely">ESCOLHA SABIAMENTE...</string>
+    <string name="search_all">Buscar tudo</string>
+    <string name="search_by_name">Buscar por nome</string>
+
     <!-- Fragment -->
     <string name="results">Resultados: %d</string>
     <string name="name"><![CDATA[<b>Nome:</b>]]> %s</string>

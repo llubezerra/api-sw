@@ -15,6 +15,7 @@ import com.cursoandoid.starwars.adapter.AdapterMenu;
 import com.cursoandoid.starwars.databinding.ActivityHomeBinding;
 import com.cursoandoid.starwars.model.Menu;
 import com.cursoandoid.starwars.viewmodel.HomeViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     //Evento de click
     @Override
     public void onClickItem(Menu menu) {
-       viewModel.openSearch(menu, this);
+        showBottomSheetDialog();
+       //viewModel.openSearch(menu, this);
+    }
+
+    private void showBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+        bottomSheetDialog.show();
+
     }
 }

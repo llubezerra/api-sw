@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black_000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
+        android:layout_width="match_parent"
+        android:layout_height="179dp"
+        android:background="@drawable/bg_bottom_sheet_dialog"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent">
+
+    <ImageView
+        android:id="@+id/dash"
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/dash_dialog"
+        app:layout_constraintTop_toTopOf="@id/cl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:id="@+id/text_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:gravity="center"
+        android:fontFamily="@font/krungthep"
+        android:textColor="@color/orange"
+        android:textSize="18dp"
+        android:text="@string/choose_wisely"
+        app:layout_constraintTop_toBottomOf="@id/dash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttom_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_buttom_dialog"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="18dp"
+        android:text="@string/search_all"
+        android:textColor="@color/light_gray"
+        android:fontFamily="@font/krungthep"
+        app:layout_constraintTop_toBottomOf="@+id/text_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/buttom_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_buttom_dialog"
+        android:paddingStart="15dp"
+        android:paddingEnd="9dp"
+        android:paddingVertical="18dp"
+        android:text="@string/search_by_name"
+        android:textColor="@color/light_gray"
+        android:fontFamily="@font/krungthep"
+        app:layout_constraintTop_toBottomOf="@+id/text_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

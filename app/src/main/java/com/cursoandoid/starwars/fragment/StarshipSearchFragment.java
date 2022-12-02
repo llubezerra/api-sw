@@ -3,31 +3,25 @@ package com.cursoandoid.starwars.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cursoandoid.starwars.GetDataService;
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
 import com.cursoandoid.starwars.model.Starship;
-import com.cursoandoid.starwars.model.Starships;
-import com.cursoandoid.starwars.network.RetrofitClientInstance;
+import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +74,7 @@ public class StarshipSearchFragment extends Fragment {
     Context context;
     ProgressDialog progressDialog;
 
+    private StarshipSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
     private AdapterStarshipSearch adapter;
 
@@ -99,15 +94,25 @@ public class StarshipSearchFragment extends Fragment {
         binding = FragmentDefaultSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.textResults.setText(getString(R.string.results, count));
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        callApi();
+
+        //Use ViewModel
+        viewModel = new ViewModelProvider(this).get(StarshipSearchViewModel.class);
+
+        binding.textResults.setText(getString(R.string.results, count));
+
+        viewModel.saveProgressDialog(progressDialog);
+        viewModel.callGetAllStarships();
+
+        //criar Observer da view model
+
+//        count = response.body().getCount();
+//        System.out.println(count);
     }
 
     public void saveContext(Context context) {
@@ -124,31 +129,6 @@ public class StarshipSearchFragment extends Fragment {
         System.out.println(count2 + "adapter");
     }
 
-    private void callApi(){
-        // Create handle for the RetrofitInstance interface
-        // ENTRAR NA TELA ABRIR TUDO
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Starships> call = service.getAllStarships();
-        call.enqueue(new Callback<Starships>() {
-            @Override
-            public void onResponse(Call<Starships> call, Response<Starships> response) {
-                progressDialog.dismiss();
-                if(response.body() != null) {
-                    generateDataList(response.body().getResults());
-                    count = response.body().getCount();
-                    System.out.println(count);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Starships> call, Throwable t) {
-                //visible gone pro costraint
-                Log.d("LOG", "onFailure: " + t.getMessage());
-                progressDialog.dismiss();
-                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-
-        });
-    }
 
 }
