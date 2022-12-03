@@ -17,11 +17,18 @@ public class RandomSearchActivity extends DefaultSearchActivity {
     }
 
     private void setupNavigation() {
+        binding.arrow.setOnClickListener(v -> onBackPressed());
+
         binding.clHeader.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_random));
         binding.icon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.darthvader));
         binding.text.setText(R.string.search_random);
         binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.orange_light));
         binding.clSearch.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
 }

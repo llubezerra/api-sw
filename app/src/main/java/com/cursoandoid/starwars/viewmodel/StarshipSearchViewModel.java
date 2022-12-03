@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StarshipSearchViewModel extends ViewModel {
+    /** View Model da Activity */
 
     private final MutableLiveData<String> searchText = new MutableLiveData<>();
     // String Array private final MutableLiveData<String> searchText = new MutableLiveData<>();
@@ -43,7 +44,7 @@ public class StarshipSearchViewModel extends ViewModel {
 
     public void saveProgressDialog(ProgressDialog progressDialog){
         this.progressDialog = progressDialog;
-    }
+    } //ESTA INFORMAÇÃO ESTÁ VINDO DO FRAGMENT???
 
     public void callGetAllStarships(){
         // Create handle for the RetrofitInstance interface
@@ -79,4 +80,6 @@ public class StarshipSearchViewModel extends ViewModel {
     public MutableLiveData<String> getSearchText() {
         return searchText;
     }
+
+
 }

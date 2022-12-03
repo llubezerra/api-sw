@@ -1,5 +1,7 @@
 package com.cursoandoid.starwars.activity;
 
+import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,8 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterMenu;
@@ -86,8 +91,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     //Evento de click
     @Override
     public void onClickItem(Menu menu) {
-        showBottomSheetDialog();
-       //viewModel.openSearch(menu, this);
+        viewModel.apiCallType(menu, this);
+        if(viewModel.getShouldShowDialog()) {
+            showBottomSheetDialog();
+        }
     }
 
     private void showBottomSheetDialog() {
@@ -96,5 +103,27 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
         bottomSheetDialog.show();
 
+        Button searchAll = bottomSheetDialog.findViewById(R.id.buttom_all);
+        Button searchByName = bottomSheetDialog.findViewById(R.id.buttom_name);
+
+        searchAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setSearchType("all");
+
+                //String origin = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
+                viewModel.openSearch(HomeActivity.this);
+            }
+        });
+
+        searchByName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.setSearchType("byName");
+                viewModel.openSearch(HomeActivity.this);
+            }
+        });
+
     }
+
 }
