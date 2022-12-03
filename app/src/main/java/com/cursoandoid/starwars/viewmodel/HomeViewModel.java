@@ -34,32 +34,47 @@ public class HomeViewModel extends ViewModel {
 //        return listType;
 //    }
 
-    public void apiCallType(Menu menu, AppCompatActivity context) {
-
+    public Boolean getShouldShowDialog(Menu menu) {
         switch (menu.getText()) {
             case "Buscar ESPAÇONAVES":
+            case "Buscar PERSONAGENS":
+            case "Buscar PLANETAS":
                 shouldShowDialog = true;
+                break;
+            case "Busca ALEATÓRIA":
+            case "CONFIGURAÇÕES":
+            case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
+                shouldShowDialog = false;
+                break;
+        }
+        return shouldShowDialog;
+    }
+
+    public void apiCallType(Menu menu, AppCompatActivity context) {
+        switch (menu.getText()) {
+            case "Buscar ESPAÇONAVES":
                 if (searchType == "all") {
                     origin = SEARCH_ALL_STARSHIPS_EXTRAS;
                 } else if (searchType == "byName") {
                     origin = SEARCH_BY_NAME_STARSHIPS_EXTRAS;
                 }
+                openSearch(context);
                 break;
             case "Buscar PLANETAS":
-                shouldShowDialog = true;
                 if (searchType == "all") {
                     origin = SEARCH_ALL_PLANETS_EXTRAS;
                 } else if (searchType == "byName") {
                     origin = SEARCH_BY_NAME_PLANETS_EXTRAS;
                 }
+                openSearch(context);
                 break;
             case "Buscar PERSONAGENS":
-                shouldShowDialog = true;
                 if (searchType == "all") {
                     origin = SEARCH_ALL_CHARACTERS_EXTRAS;
                 } else if (searchType == "byName") {
                     origin = SEARCH_BY_NAME_CHARACTERS_EXTRAS;
                 }
+                openSearch(context);
                 break;
             case "Busca ALEATÓRIA":
                 Intent random = new Intent(context, RandomSearchActivity.class);
@@ -73,14 +88,12 @@ public class HomeViewModel extends ViewModel {
                 Toast.makeText(context, "Sonzim", Toast.LENGTH_SHORT).show();
                 break;
         }
+        System.out.println("aqui: " + origin);
+        System.out.println("menu: " + menu.getText());
     }
 
     //pegar a posição e retornar a tela
     public void openSearch(AppCompatActivity context) {
-
-//        Intent intent = new Intent(context, V2PixInstallmentsOnboardingActivity.class);
-//        intent.putExtra(PIX_ORIGIN_TYPE_INSTALLMENTS_EXTRAS, origin);
-//        ("Buscar ESPAÇONAVES"&& SEARCH_ALL_STARSHIPS_EXTRAS):
 
         switch (origin) {
             case SEARCH_ALL_STARSHIPS_EXTRAS:
@@ -111,9 +124,5 @@ public class HomeViewModel extends ViewModel {
 
     public void setSearchType(String searchType) {
         this.searchType = searchType;
-    }
-
-    public Boolean getShouldShowDialog() {
-        return shouldShowDialog;
     }
 }

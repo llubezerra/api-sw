@@ -91,13 +91,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     //Evento de click
     @Override
     public void onClickItem(Menu menu) {
-        viewModel.apiCallType(menu, this);
-        if(viewModel.getShouldShowDialog()) {
-            showBottomSheetDialog();
+        if(viewModel.getShouldShowDialog(menu)) {
+            showBottomSheetDialog(menu);
+        }else{
+            viewModel.apiCallType(menu, this);
         }
     }
 
-    private void showBottomSheetDialog() {
+    private void showBottomSheetDialog(Menu menu) {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
@@ -110,9 +111,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
             @Override
             public void onClick(View view) {
                 viewModel.setSearchType("all");
-
-                //String origin = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
-                viewModel.openSearch(HomeActivity.this);
+                viewModel.apiCallType(menu, HomeActivity.this);
             }
         });
 
@@ -120,9 +119,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
             @Override
             public void onClick(View view) {
                 viewModel.setSearchType("byName");
-                viewModel.openSearch(HomeActivity.this);
+                viewModel.apiCallType(menu, HomeActivity.this);
             }
         });
+
+        //String origin = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
+        //viewModel.openSearch(HomeActivity.this);
 
     }
 
