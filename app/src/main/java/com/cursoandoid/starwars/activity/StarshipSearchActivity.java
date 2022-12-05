@@ -49,6 +49,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             }
 
         });
+
 //        {
 //            //TODO here get the string stored in the string variable and do
 //            // setText() on userName

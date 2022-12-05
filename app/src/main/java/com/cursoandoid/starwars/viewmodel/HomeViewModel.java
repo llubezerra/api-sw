@@ -2,9 +2,11 @@ package com.cursoandoid.starwars.viewmodel;
 
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_CHARACTERS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_PLANETS_EXTRAS;
+import static com.cursoandoid.starwars.Constants.SEARCH_ALL_RANDOM_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_STARSHIPS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_CHARACTERS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_PLANETS_EXTRAS;
+import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_RANDOM_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
@@ -12,7 +14,6 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cursoandoid.starwars.activity.CharacterSearchActivity;
@@ -24,7 +25,6 @@ import com.cursoandoid.starwars.model.Menu;
 
 public class HomeViewModel extends ViewModel {
 
-    //MutableLiveData<String> searchType = new MutableLiveData<>();
     private String searchType;
     private String origin;
 
@@ -42,6 +42,7 @@ public class HomeViewModel extends ViewModel {
 
     }
 
+    //pegar a posição do Menu, o searchType e definir o put extras ou a tela
     public void apiCallType(Menu menu, AppCompatActivity context) {
         switch (menu.getText()) {
             case "Buscar ESPAÇONAVES":
@@ -69,8 +70,12 @@ public class HomeViewModel extends ViewModel {
                 openSearch(context);
                 break;
             case "Busca ALEATÓRIA":
-                Intent random = new Intent(context, RandomSearchActivity.class);
-                context.startActivity(random);
+                if (searchType == "all") {
+                    origin = SEARCH_ALL_RANDOM_EXTRAS;
+                } else if (searchType == "byName") {
+                    origin = SEARCH_BY_NAME_RANDOM_EXTRAS;
+                }
+                openSearch(context);
                 break;
             case "CONFIGURAÇÕES":
                 Intent settings = new Intent(context, SettingsActivity.class);
@@ -84,7 +89,6 @@ public class HomeViewModel extends ViewModel {
         System.out.println("menu: " + menu.getText());
     }
 
-    //pegar a posição e retornar a tela
     public void openSearch(AppCompatActivity context) {
 
         switch (origin) {
@@ -106,13 +110,14 @@ public class HomeViewModel extends ViewModel {
                 characters.putExtra(SEARCH_INFORMATION_API_EXTRAS, origin);
                 context.startActivity(characters);
                 break;
+            case SEARCH_ALL_RANDOM_EXTRAS:
+            case SEARCH_BY_NAME_RANDOM_EXTRAS:
+            Intent random = new Intent(context, RandomSearchActivity.class);
+            random.putExtra(SEARCH_INFORMATION_API_EXTRAS, origin);
+            context.startActivity(random);
+                break;
         }
     }
-
-//    public LiveData<String> getSearchType() {
-//        return searchType;
-//    }
-
 
     public void setSearchType(String searchType) {
         this.searchType = searchType;

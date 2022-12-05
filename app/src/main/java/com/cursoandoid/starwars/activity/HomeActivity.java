@@ -1,6 +1,9 @@
 package com.cursoandoid.starwars.activity;
 
-import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -8,12 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterMenu;
@@ -72,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         //Configurar adapter
         AdapterMenu adapter = new AdapterMenu(listMenu, this, list, this);
 
+        //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerMenuList.setLayoutManager(layoutManager);
         binding.recyclerMenuList.setAdapter(adapter);
@@ -133,9 +131,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
                 viewModel.apiCallType(menu, HomeActivity.this);
             }
         });
-
-        //String origin = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
-        //viewModel.openSearch(HomeActivity.this);
 
     }
 
