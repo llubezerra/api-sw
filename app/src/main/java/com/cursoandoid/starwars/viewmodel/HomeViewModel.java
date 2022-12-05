@@ -28,26 +28,18 @@ public class HomeViewModel extends ViewModel {
     private String searchType;
     private String origin;
 
-    private Boolean shouldShowDialog = false;
 
 //    private String listType(){
 //        return listType;
 //    }
 
     public Boolean getShouldShowDialog(Menu menu) {
-        switch (menu.getText()) {
-            case "Buscar ESPAÇONAVES":
-            case "Buscar PERSONAGENS":
-            case "Buscar PLANETAS":
-                shouldShowDialog = true;
-                break;
-            case "Busca ALEATÓRIA":
-            case "CONFIGURAÇÕES":
-            case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
-                shouldShowDialog = false;
-                break;
+
+        if(!(menu.getText().equals("CONFIGURAÇÕES")) && !(menu.getText().equals("REPRODUZIR SOM CLÁSSICO \nDO FILME"))){
+            return true;
         }
-        return shouldShowDialog;
+        return false;
+
     }
 
     public void apiCallType(Menu menu, AppCompatActivity context) {

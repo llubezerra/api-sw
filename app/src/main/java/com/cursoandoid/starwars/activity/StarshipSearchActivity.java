@@ -1,6 +1,7 @@
 package com.cursoandoid.starwars.activity;
 
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_STARSHIPS_EXTRAS;
+import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
+
+import java.util.Objects;
 
 public class StarshipSearchActivity extends DefaultSearchActivity{
 
@@ -33,20 +36,34 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     private void setupNavigation() {
         binding.searchButton.setOnClickListener(v -> {
-//            if(viewModel.getOrigin() == SEARCH_ALL_STARSHIPS_EXTRAS){
-//                Toast.makeText(this, "Tudão", Toast.LENGTH_SHORT).show();
-//            } else{
-//                Toast.makeText(this, "Por nome", Toast.LENGTH_SHORT).show();
-//            }
-        });
 
-//        Bundle bundle = getIntent().getExtras();
-//
-//        if(bundle.getString("strName")!= null)
+            String searchExtras = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
+
+            //Se usar == não vai!
+            if(Objects.equals(searchExtras, SEARCH_ALL_STARSHIPS_EXTRAS)) {
+                System.out.println("Search: " + searchExtras);
+                Toast.makeText(this, "starship all", Toast.LENGTH_SHORT).show();
+            } else if(Objects.equals(searchExtras, SEARCH_BY_NAME_STARSHIPS_EXTRAS)) {
+                System.out.println("Search: " + searchExtras);
+                Toast.makeText(this, "starship by name", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 //        {
 //            //TODO here get the string stored in the string variable and do
 //            // setText() on userName
 //        }
+//        String newString;
+//
+//            if(extras == null) {
+//                newString= null;
+//            } else {
+//                newString= extras.getString("STRING_I_NEED");
+//            }
+//        } else {
+//            newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
+//        }
+
     }
 
     private void goToFragment() {

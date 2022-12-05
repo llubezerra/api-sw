@@ -31,6 +31,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     private List<Menu> listMenu = new ArrayList<>();
     private String list, grid;
 
+    BottomSheetDialog bottomSheetDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
         recyclerViewGrid();
 
+    }
+
+    //Quando voltamos da Activity seguinte estaremos no onStop(), daí caímos no onRestart() e como não precisamos voltar com o dialog damos o dismiss
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(bottomSheetDialog != null){
+            bottomSheetDialog.dismiss();
+        }
     }
 
     private void recyclerViewGrid(){
@@ -100,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
     private void showBottomSheetDialog(Menu menu) {
 
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
         bottomSheetDialog.show();
 
