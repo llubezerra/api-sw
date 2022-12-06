@@ -21,6 +21,7 @@ import retrofit2.Response;
 
 public class StarshipSearchViewModel extends ViewModel {
     /** View Model da Activity */
+    /** GET STARSHIPS BY NAME */
 
     private final MutableLiveData<String> searchText = new MutableLiveData<>();
     // String Array private final MutableLiveData<String> searchText = new MutableLiveData<>();
