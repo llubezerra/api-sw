@@ -5,7 +5,6 @@ import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -45,9 +44,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
         setupNavigation();
 
-        binding.textResults.setText(getString(R.string.results, count));
-
-        //set status bar não tá ok
+        //TODO: set status bar não tá ok
         //getWindow().setStatusBarColor(Color.alpha(R.color.dark_gray));
     }
 
@@ -70,6 +67,9 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             callByName();
             getCurrentFocus();
         });
+
+        binding.textResults.setText(getString(R.string.results, count));
+
 //      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
 
     }

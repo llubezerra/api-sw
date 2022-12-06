@@ -24,21 +24,17 @@ public class StarshipSearchViewModel extends ViewModel {
     String searchText;
     private final MutableLiveData<List<Starship>> dataListDone = new MutableLiveData<>();
 
-    //ArrayList starship mutable pra result
-    //Mutable + LiveData
-
 //    private StarshipSearchInterface starshipSearchInterface;
 //
 //    public StarshipSearchViewModel() {
 //        starshipSearchInterface = BusinessModel.getInstance();
 //    }
 
-    //receber texto
-
     public void callGetByNameStarships(String search){
         // Create handle for the RetrofitInstance interface
         // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        //receber texto da Activity
         Call<Starships> call = service.getStarshipByName(search);
         //O método do callback
         call.enqueue(new Callback<Starships>() {
