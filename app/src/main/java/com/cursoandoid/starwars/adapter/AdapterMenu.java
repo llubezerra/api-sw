@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cursoandoid.starwars.Constants;
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.model.Menu;
 
@@ -53,7 +54,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
         Menu menu = listMenu.get(position);
         holder.text.setText(menu.getText());
         holder.image.setImageDrawable(menu.getImage());
-        if (menu.getText().equals("Busca ALEATÓRIA")) {
+        if (menu.getText().equals(Constants.RANDOM_SEARCH)) {
             holder.color.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_home_special));
         }
     }

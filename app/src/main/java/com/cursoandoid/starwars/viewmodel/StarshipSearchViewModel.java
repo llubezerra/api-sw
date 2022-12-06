@@ -1,10 +1,8 @@
 package com.cursoandoid.starwars.viewmodel;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -23,13 +21,11 @@ public class StarshipSearchViewModel extends ViewModel {
     /** View Model da Activity */
     /** GET STARSHIPS BY NAME */
 
-    private final MutableLiveData<String> searchText = new MutableLiveData<>();
-    // String Array private final MutableLiveData<String> searchText = new MutableLiveData<>();
+    String searchText;
+    private final MutableLiveData<List<Starship>> dataListDone = new MutableLiveData<>();
+
     //ArrayList starship mutable pra result
     //Mutable + LiveData
-
-    ProgressDialog progressDialog;
-    Context context;
 
 //    private StarshipSearchInterface starshipSearchInterface;
 //
@@ -37,50 +33,33 @@ public class StarshipSearchViewModel extends ViewModel {
 //        starshipSearchInterface = BusinessModel.getInstance();
 //    }
 
-    //CONSTRUTOR VAZIO
-    //Implement ViewModel ??
-    public StarshipSearchViewModel(){
+    //receber texto
 
-    }
-
-    public void saveProgressDialog(ProgressDialog progressDialog){
-        this.progressDialog = progressDialog;
-    } //ESTA INFORMAÇÃO ESTÁ VINDO DO FRAGMENT???
-
-    public void callGetAllStarships(){
+    public void callGetByNameStarships(String search){
         // Create handle for the RetrofitInstance interface
         // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Starships> call = service.getAllStarships();
+        Call<Starships> call = service.getStarshipByName(search);
         //O método do callback
         call.enqueue(new Callback<Starships>() {
             @Override
             public void onResponse(Call<Starships> call, Response<Starships> response) {
-                progressDialog.dismiss();
                 if(response.body() != null) {
-                    generateDataList(response.body().getResults());
-
+                    dataListDone.setValue(response.body().getResults());
                 }
             }
 
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
-                //visible gone pro costraint
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                progressDialog.dismiss();
-                Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                dataListDone.setValue(null);
             }
 
         });
     }
 
-    private void generateDataList(List<Starship> starshipList) {
-
+    public LiveData<List<Starship>> getDataListDone() {
+        return dataListDone;
     }
-
-    public MutableLiveData<String> getSearchText() {
-        return searchText;
-    }
-
 
 }

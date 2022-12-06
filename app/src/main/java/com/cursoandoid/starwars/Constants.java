@@ -13,6 +13,9 @@ public class Constants {
     public static final String SEARCH_ALL_RANDOM_EXTRAS = "all_random_extras";
     public static final String SEARCH_BY_NAME_RANDOM_EXTRAS = "by_name_random_extras";
 
+
     //CONSTANTES GERAL
+
+    public static final String RANDOM_SEARCH = "Busca ALEATÓRIA";
 
 }

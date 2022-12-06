@@ -17,6 +17,8 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
         super.onCreate(savedInstanceState);
 
         setupNavigation();
+
+        //Toast.makeText(this, "starship by name", Toast.LENGTH_SHORT).show();
     }
 
     private void setupNavigation() {

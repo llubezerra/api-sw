@@ -20,7 +20,7 @@ public interface GetDataService {
     Call<Starships> getAllStarships();
 
     @GET("starships/")
-    Call<Starship> getStarship(@Query("search") String search);
+    Call<Starships> getStarshipByName(@Query("search") String search);
 
     @GET("people/")
     Call<Characters> getAllCharacters();

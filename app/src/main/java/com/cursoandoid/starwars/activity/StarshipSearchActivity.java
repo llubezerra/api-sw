@@ -10,10 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +22,6 @@ import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
 import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,12 +29,12 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     private StarshipSearchViewModel viewModel;
     private StarshipSearchFragment fragment;
-
-    Context context;
-    ProgressDialog progressDialog;
-
     private AdapterStarshipSearch adapter;
 
+    ProgressDialog progressDialog;
+
+    String search;
+    private Integer count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +45,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
         setupNavigation();
 
-        //criar Observer da view model
-        //binding.textResults.setText(getString(R.string.results, count));
-
-//        viewModel.saveProgressDialog(progressDialog);
-//        viewModel.callGetAllStarships();
+        binding.textResults.setText(getString(R.string.results, count));
 
         //set status bar não tá ok
         //getWindow().setStatusBarColor(Color.alpha(R.color.dark_gray));
@@ -71,38 +63,59 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             goToFragment();
         } else if(Objects.equals(searchExtras, SEARCH_BY_NAME_STARSHIPS_EXTRAS)) {
             System.out.println("Search: " + searchExtras);
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setMessage("Loading....");
-            progressDialog.show();
-
-            Toast.makeText(this, "starship by name", Toast.LENGTH_SHORT).show();
         }
 
         binding.searchButton.setOnClickListener(v -> {
-
-
+            search = binding.editText.getText().toString();
+            callByName();
+            getCurrentFocus();
         });
-
-//            newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
+//      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
 
     }
 
-//        count = response.body().getCount();
-//        System.out.println(count);
+    public void callByName() {
 
-    public void saveContext(Context context) {
-        this.context = context;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+
+        //API CALL
+        viewModel.callGetByNameStarships(search);
+
+        // Create the observer which updates the UI.
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getDataListDone().observe(this, new Observer<List<Starship>>() {
+            @Override
+            public void onChanged(List<Starship> starships) {
+                // Update the UI, in this case, a list
+                progressDialog.dismiss();
+                if(starships != null){
+                    binding.clRecyclerSearch.setVisibility(View.VISIBLE);
+                    generateDataList(starships);
+                } else {
+                    onFailure();
+                }
+            }
+        });
+
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-//    private void generateDataList(List<Starship> starshipList) {
-//        adapter = new AdapterStarshipSearch(context, starshipList);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-//        binding.recyclerSearchList.setLayoutManager(layoutManager);
-//        binding.recyclerSearchList.setAdapter(adapter);
-//        Integer count2 = adapter.getItemCount();
-//        System.out.println(count2 + "adapter");
-//    }
+    private void generateDataList(List<Starship> starshipList) {
+        adapter = new AdapterStarshipSearch(this, starshipList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.recyclerSearchList.setLayoutManager(layoutManager);
+        binding.recyclerSearchList.setAdapter(adapter);
+        count = adapter.getItemCount();
+        System.out.println(count + "adapter");
+    }
+
+    public void onFailure(){
+        //visible gone pro constraint
+        Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+
+    }
 
     private void goToFragment() {
         //ir pra fragment
@@ -117,19 +130,5 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         //sumir o search
         binding.clSearch.setVisibility(View.GONE);
     }
-
-//    // Create the observer which updates the UI.
-//    final LiveData<ArrayList<Starship>> listObserver = viewModel.getDataStarshipsList();
-//        listObserver.observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
-//        @Override
-//        public void onChanged(ArrayList<String> strings) {
-//            // Update the UI
-//            generateDataList(viewModel.getDataStarshipsList());
-//        }
-//    });
-//
-//    // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-//        viewModel.getDataStarshipsList().observe(this, listObserver);
-//}
 
 }

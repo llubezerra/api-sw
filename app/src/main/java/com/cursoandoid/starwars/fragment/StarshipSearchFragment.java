@@ -143,4 +143,8 @@ public class StarshipSearchFragment extends Fragment {
 
     }
 
+    public void saveContext(Context context) {
+        this.context = context;
+    }
+
 }

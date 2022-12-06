@@ -20,7 +20,7 @@ import retrofit2.Response;
 public class StarshipFragmentViewModel extends ViewModel {
     /** GET ALL STARSHIPS */
 
-    private MutableLiveData<List<Starship>> dataListDone = new MutableLiveData<>();
+    private final MutableLiveData<List<Starship>> dataListDone = new MutableLiveData<>();
 
 
     public void callGetAllStarships(){
