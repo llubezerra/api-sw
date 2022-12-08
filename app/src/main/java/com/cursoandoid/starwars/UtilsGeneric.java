@@ -1,4 +1,4 @@
-package com.cursoandoid;
+package com.cursoandoid.starwars;
 
 import android.app.Activity;
 import android.content.Context;

@@ -20,7 +20,7 @@ import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
 import com.cursoandoid.starwars.model.Starship;
-import com.cursoandoid.starwars.viewmodel.StarshipFragmentViewModel;
+import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class StarshipSearchFragment extends Fragment {
     Context context;
     ProgressDialog progressDialog;
 
-    private StarshipFragmentViewModel viewModel;
+    private StarshipSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
     private AdapterStarshipSearch adapter;
 
@@ -101,7 +101,7 @@ public class StarshipSearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Get the ViewModel
-        viewModel = new ViewModelProvider(this).get(StarshipFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(StarshipSearchViewModel.class);
 
         //API CALL
         viewModel.callGetAllStarships();
