@@ -128,8 +128,8 @@ public class StarshipSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
-        // TODO -> Conferir com a api. Paginação?
+        binding.textResults.setText(getString(R.string.results, starshipList.size()));
+        // TODO -> Paginação
     }
 
     public void onFailure(){

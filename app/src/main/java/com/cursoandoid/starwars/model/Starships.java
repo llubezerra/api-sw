@@ -39,13 +39,14 @@ public class Starships {
     }
 
     /** Usado para ver meu retorno */
-    @Override
-    public String toString() {
-        return "Starships{" +
-                "count=" + count +
-                ", next='" + next + '\'' +
-                ", previus=" + previus +
-                ", results=" + results +
-                '}';
-    }
+//    Log.d("LOG", " " + response.body()); --> colocar na chamada pra trazer o toString caso necessite
+//    @Override
+//    public String toString() {
+//        return "Starships{" +
+//                "count=" + count +
+//                ", next='" + next + '\'' +
+//                ", previus=" + previus +
+//                ", results=" + results +
+//                '}';
+//    }
 }

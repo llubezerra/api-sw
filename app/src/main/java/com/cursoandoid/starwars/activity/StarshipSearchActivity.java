@@ -6,6 +6,7 @@ import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -56,10 +57,10 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         //Se usar == não vai!
         if(Objects.equals(searchExtras, SEARCH_ALL_STARSHIPS_EXTRAS)) {
             // ENTRAR NA TELA E ABRIR TUDO (Go fragment)
-            System.out.println("Search: " + searchExtras);
+            Log.d("LOG", "Search: " + searchExtras);
             goToFragment();
         } else if(Objects.equals(searchExtras, SEARCH_BY_NAME_STARSHIPS_EXTRAS)) {
-            System.out.println("Search: " + searchExtras);
+            Log.d("LOG","Search: " + searchExtras);
         }
 
         binding.searchButton.setOnClickListener(v -> {
