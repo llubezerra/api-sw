@@ -33,7 +33,6 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
     ProgressDialog progressDialog;
 
     String search;
-    private Integer count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +66,6 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             callByName();
             getCurrentFocus();
         });
-
-        binding.textResults.setText(getString(R.string.results, count));
 
 //      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
 
@@ -107,8 +104,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        count = adapter.getItemCount();
-        System.out.println(count + "adapter");
+        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
     }
 
     public void onFailure(){

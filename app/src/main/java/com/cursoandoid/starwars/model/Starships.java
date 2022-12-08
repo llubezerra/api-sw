@@ -38,4 +38,14 @@ public class Starships {
         return results;
     }
 
+    /** Usado para ver meu retorno */
+    @Override
+    public String toString() {
+        return "Starships{" +
+                "count=" + count +
+                ", next='" + next + '\'' +
+                ", previus=" + previus +
+                ", results=" + results +
+                '}';
+    }
 }

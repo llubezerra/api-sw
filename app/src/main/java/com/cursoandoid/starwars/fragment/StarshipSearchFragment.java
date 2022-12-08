@@ -79,8 +79,6 @@ public class StarshipSearchFragment extends Fragment {
     protected FragmentDefaultSearchBinding binding;
     private AdapterStarshipSearch adapter;
 
-    private Integer count;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -122,8 +120,6 @@ public class StarshipSearchFragment extends Fragment {
                 }
             }
         });
-
-        binding.textResults.setText(getString(R.string.results, count));
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
@@ -132,9 +128,8 @@ public class StarshipSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        count = adapter.getItemCount();
+        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
         // TODO -> Conferir com a api. Paginação?
-        System.out.println(count + " adapter");
     }
 
     public void onFailure(){

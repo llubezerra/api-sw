@@ -41,6 +41,8 @@ public class StarshipSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Starships> call, Response<Starships> response) {
                 if(response.body() != null) {
+                    // TODO divergência
+                    Log.d("LOG", " " + response.body());
                     dataListDone.setValue(response.body().getResults());
                 }
             }
