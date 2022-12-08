@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
+import com.cursoandoid.starwars.UtilsGeneric;
 import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
 import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
 import com.cursoandoid.starwars.model.Starship;
@@ -64,7 +65,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
             callByName();
-            getCurrentFocus();
+            UtilsGeneric.hideKeyboard(this);
         });
 
 //      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
