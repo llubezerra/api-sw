@@ -1,7 +1,6 @@
 package com.cursoandoid.starwars;
 
 import com.cursoandoid.starwars.model.Characters;
-import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.model.Starships;
 
 import retrofit2.Call;
@@ -24,4 +23,7 @@ public interface GetDataService {
 
     @GET("people/")
     Call<Characters> getAllCharacters();
+
+    @GET("people/")
+    Call<Characters> getCharacterByName(@Query("search") String search);
 }
