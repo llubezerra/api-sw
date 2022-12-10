@@ -30,6 +30,7 @@
             android:layout_height="30dp"
             tools:text="@string/search"
             android:layout_marginBottom="12dp"
+            android:gravity="center_horizontal"
             android:fontFamily="@font/krungthep"
             android:textColor="@color/dark_gray"
             android:textSize="12sp"

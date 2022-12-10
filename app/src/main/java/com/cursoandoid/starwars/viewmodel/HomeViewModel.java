@@ -35,11 +35,15 @@ public class HomeViewModel extends ViewModel {
 
     public Boolean getShouldShowDialog(Menu menu) {
 
-        if(!(menu.getText().equals("CONFIGURAÇÕES")) && !(menu.getText().equals("REPRODUZIR SOM CLÁSSICO \nDO FILME"))){
+        if(!(menu.getText().equals("CONFIGURAÇÕES")) && !(menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME"))){
             return true;
         }
         return false;
 
+    }
+
+    public Boolean getShoulShowMusic(Menu menu) {
+        return menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME");
     }
 
     //pegar a posição do Menu, o searchType e definir o put extras ou a tela

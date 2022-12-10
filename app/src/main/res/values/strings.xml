@@ -8,7 +8,7 @@
     <string name="search_characters">Buscar PERSONAGENS</string>
     <string name="search_random">Busca ALEATÓRIA</string>
     <string name="settings">CONFIGURAÇÕES</string>
-    <string name="sound">REPRODUZIR SOM CLÁSSICO \nDO FILME</string>
+    <string name="sound">REPRODUZIR SOM CLÁSSICO DO FILME</string>
     <string name="spaceships">ESPAÇONAVES</string>
     <string name="planets">PLANETAS</string>
     <string name="characters">PERSONAGENS</string>
@@ -28,6 +28,8 @@
     <string name="choose_wisely">ESCOLHA SABIAMENTE...</string>
     <string name="search_all">Buscar tudo</string>
     <string name="search_by_name">Buscar por nome</string>
+    <string name="playing_sound">REPRODUZINDO SOM...</string>
+    <string name="stop_music">PARAR MÚSICA</string>
 
     <!-- Fragment -->
     <string name="results">Resultados: %d</string>

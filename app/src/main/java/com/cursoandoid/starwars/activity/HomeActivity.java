@@ -101,16 +101,18 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     @Override
     public void onClickItem(Menu menu) {
         if(viewModel.getShouldShowDialog(menu)) {
-            showBottomSheetDialog(menu);
-        }else{
+            showBottomSheetChooseDialog(menu);
+        } else if(viewModel.getShoulShowMusic(menu)){
+            showBottomSheetMusicDialog(menu);
+        } else{
             viewModel.apiCallType(menu, this);
         }
     }
 
-    private void showBottomSheetDialog(Menu menu) {
+    private void showBottomSheetChooseDialog(Menu menu) {
 
         bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_choose_layout);
         bottomSheetDialog.show();
 
         Button searchAll = bottomSheetDialog.findViewById(R.id.buttom_all);
@@ -131,6 +133,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
                 viewModel.apiCallType(menu, HomeActivity.this);
             }
         });
+
+    }
+
+    private void showBottomSheetMusicDialog(Menu menu) {
+
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_music_layout);
+        bottomSheetDialog.show();
 
     }
 
