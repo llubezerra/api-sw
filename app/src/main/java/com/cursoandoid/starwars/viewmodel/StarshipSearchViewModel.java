@@ -31,7 +31,6 @@ public class StarshipSearchViewModel extends ViewModel {
     /** GET STARSHIPS BY NAME */
     public void callGetByNameStarships(String search){
         // Create handle for the RetrofitInstance interface
-        // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         //receber texto da Activity -> searchText
         Call<Starships> call = service.getStarshipByName(search);
@@ -56,6 +55,7 @@ public class StarshipSearchViewModel extends ViewModel {
     /** GET ALL STARSHIPS */
     public void callGetAllStarships(){
         // Create handle for the RetrofitInstance interface
+        // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Starships> call = service.getAllStarships();
         // O método do callback

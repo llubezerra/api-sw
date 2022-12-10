@@ -1,6 +1,7 @@
 package com.cursoandoid.starwars;
 
 import com.cursoandoid.starwars.model.Characters;
+import com.cursoandoid.starwars.model.Planets;
 import com.cursoandoid.starwars.model.Starships;
 
 import retrofit2.Call;
@@ -26,4 +27,10 @@ public interface GetDataService {
 
     @GET("people/")
     Call<Characters> getCharacterByName(@Query("search") String search);
+
+    @GET("planets/")
+    Call<Planets> getAllPlanets();
+
+    @GET("planets/")
+    Call<Planets> getPlanetByName(@Query("search") String search);
 }

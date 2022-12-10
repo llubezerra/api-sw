@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cursoandoid.starwars.GetDataService;
-import com.cursoandoid.starwars.model.Character;
-import com.cursoandoid.starwars.model.Characters;
+import com.cursoandoid.starwars.model.Planet;
+import com.cursoandoid.starwars.model.Planets;
 import com.cursoandoid.starwars.network.RetrofitClientInstance;
 
 import java.util.List;
@@ -17,28 +17,28 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CharacterSearchViewModel extends ViewModel {
+public class PlanetSearchViewModel extends ViewModel {
     /** View Model da Activity e Fragment */
 
-    private final MutableLiveData<List<Character>> dataListDone = new MutableLiveData<>();
+    private final MutableLiveData<List<Planet>> dataListDone = new MutableLiveData<>();
 
-    /** GET CHARACTERS BY NAME */
-    public void callGetByNameCharacters(String search){
+    /** GET PLANETS BY NAME */
+    public void callGetByNamePlanets(String search){
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         //receber texto da Activity -> searchText
-        Call<Characters> call = service.getCharacterByName(search);
+        Call<Planets> call = service.getPlanetByName(search);
         //O método do callback
-        call.enqueue(new Callback<Characters>() {
+        call.enqueue(new Callback<Planets>() {
             @Override
-            public void onResponse(Call<Characters> call, Response<Characters> response) {
+            public void onResponse(Call<Planets> call, Response<Planets> response) {
                 if(response.body() != null) {
                     dataListDone.setValue(response.body().getResults());
                 }
             }
 
             @Override
-            public void onFailure(Call<Characters> call, Throwable t) {
+            public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
                 dataListDone.setValue(null);
             }
@@ -46,22 +46,23 @@ public class CharacterSearchViewModel extends ViewModel {
         });
     }
 
-    /** GET ALL CHARACTERS */
-    public void callGetAllCharacters(){
+    /** GET ALL PLANETS */
+    public void callGetAllPlanets(){
         // Create handle for the RetrofitInstance interface
         // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Characters> call = service.getAllCharacters();
-        call.enqueue(new Callback<Characters>() {
+        Call<Planets> call = service.getAllPlanets();
+        //O método do callback
+        call.enqueue(new Callback<Planets>() {
             @Override
-            public void onResponse(Call<Characters> call, Response<Characters> response) {
+            public void onResponse(Call<Planets> call, Response<Planets> response) {
                 if(response.body() != null) {
                     dataListDone.setValue(response.body().getResults());
                 }
             }
 
             @Override
-            public void onFailure(Call<Characters> call, Throwable t) {
+            public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
                 dataListDone.setValue(null);
             }
@@ -69,7 +70,7 @@ public class CharacterSearchViewModel extends ViewModel {
         });
     }
 
-    public LiveData<List<Character>> getDataListDone() {
+    public LiveData<List<Planet>> getDataListDone() {
         return dataListDone;
     }
 

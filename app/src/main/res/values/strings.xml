@@ -36,4 +36,6 @@
     <string name="passengers"><![CDATA[<b>Passageiros:</b>]]> %s</string>
     <string name="height"><![CDATA[<b>Altura:</b>]]> %s</string>
     <string name="eyes_color"><![CDATA[<b>Cor dos olhos:</b>]]> %s</string>
+    <string name="population"><![CDATA[<b>População:</b>]]> %s</string>
+    <string name="diameter"><![CDATA[<b>Diâmetro:</b>]]> %s</string>
 </resources>
