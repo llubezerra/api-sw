@@ -1,11 +1,15 @@
 package com.cursoandoid.starwars.activity;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,6 +31,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     private HomeViewModel viewModel;
     private List<Menu> listMenu = new ArrayList<>();
     private String list, grid;
+
+    private MediaPlayer mediaPlayer;
 
     BottomSheetDialog bottomSheetDialog;
 
@@ -138,10 +144,38 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
     private void showBottomSheetMusicDialog(Menu menu) {
 
-        bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_music_layout);
-        bottomSheetDialog.show();
+        BottomSheetDialog musicDialog;
+        musicDialog = new BottomSheetDialog(this);
+        musicDialog.setContentView(R.layout.bottom_sheet_music_layout);
+        musicDialog.show();
 
+        //Toca a música
+        mediaPlayer = MediaPlayer.create(this, R.raw.imperial_march);
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+
+            //Configura o audio manager
+            AudioManager audioManager;
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+            //Recupera o volume máximo
+            int volumeMaximo = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+            //Seta o volume máximo na execução
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volumeMaximo, 0);
+
+        }
+
+        ConstraintLayout stop = musicDialog.findViewById(R.id.buttom_stop);
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    musicDialog.dismiss();
+                }
+            }
+        });
     }
 
 }

@@ -11,6 +11,7 @@ import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +31,14 @@ public class HomeViewModel extends ViewModel {
 
 
 //    private String listType(){
+//    ver como o type LISTA trará os nomes
 //        return listType;
 //    }
 
     public Boolean getShouldShowDialog(Menu menu) {
 
         if(!(menu.getText().equals("CONFIGURAÇÕES")) && !(menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME"))){
+            //colocar esses nomes em constantes pois não funciona o r.string
             return true;
         }
         return false;
@@ -85,12 +88,11 @@ public class HomeViewModel extends ViewModel {
                 Intent settings = new Intent(context, SettingsActivity.class);
                 context.startActivity(settings);
                 break;
-            case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
-                Toast.makeText(context, "Sonzim", Toast.LENGTH_SHORT).show();
-                break;
+//            case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
+//                Toast.makeText(context, "Sonzim", Toast.LENGTH_SHORT).show();
+//                break;
         }
-        System.out.println("aqui: " + origin);
-        System.out.println("menu: " + menu.getText());
+        Log.d("LOG", "aqui: " + origin);
     }
 
     public void openSearch(AppCompatActivity context) {
