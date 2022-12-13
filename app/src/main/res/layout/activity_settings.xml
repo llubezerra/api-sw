@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_grid_1"
+            android:id="@+id/cl_grid"
             android:layout_column="0"
             android:layout_row="0"
             android:layout_gravity="start"
@@ -93,7 +93,7 @@
             app:layout_constraintTop_toBottomOf="parent" >
 
             <ImageView
-                android:id="@+id/circle_1"
+                android:id="@+id/circle_grid"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -105,7 +105,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_1"
+                android:id="@+id/text_grid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -116,13 +116,13 @@
                 android:textColor="@color/orange"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/circle_1"
+                app:layout_constraintStart_toEndOf="@id/circle_grid"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_grid_2"
+            android:id="@+id/cl_list"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_gravity="start"
@@ -133,7 +133,7 @@
             app:layout_constraintTop_toBottomOf="parent" >
 
             <ImageView
-                android:id="@+id/circle_2"
+                android:id="@+id/circle_list"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -145,7 +145,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_2"
+                android:id="@+id/text_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -156,7 +156,7 @@
                 android:textColor="@color/light_gray"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/circle_2"
+                app:layout_constraintStart_toEndOf="@id/circle_list"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -188,7 +188,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_grid_3"
+            android:id="@+id/cl_portuguese"
             android:layout_column="0"
             android:layout_row="0"
             android:layout_gravity="start"
@@ -199,7 +199,7 @@
             app:layout_constraintTop_toBottomOf="parent" >
 
             <ImageView
-                android:id="@+id/circle_3"
+                android:id="@+id/circle_portuguese"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -211,7 +211,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_3"
+                android:id="@+id/text_portuguese"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -222,13 +222,13 @@
                 android:textColor="@color/orange"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/circle_3"
+                app:layout_constraintStart_toEndOf="@id/circle_portuguese"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_grid_4"
+            android:id="@+id/cl_english"
             android:layout_column="0"
             android:layout_row="1"
             android:layout_gravity="start"
@@ -239,7 +239,7 @@
             app:layout_constraintTop_toBottomOf="parent" >
 
             <ImageView
-                android:id="@+id/circle_4"
+                android:id="@+id/circle_english"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -251,7 +251,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_4"
+                android:id="@+id/text_english"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -262,13 +262,13 @@
                 android:textColor="@color/light_gray"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/circle_4"
+                app:layout_constraintStart_toEndOf="@id/circle_english"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_grid_5"
+            android:id="@+id/cl_russian"
             android:layout_column="0"
             android:layout_row="2"
             android:layout_gravity="start"
@@ -279,7 +279,7 @@
             app:layout_constraintTop_toBottomOf="parent" >
 
             <ImageView
-                android:id="@+id/circle_5"
+                android:id="@+id/circle_russian"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="16dp"
@@ -291,7 +291,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/text_5"
+                android:id="@+id/text_russian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -302,7 +302,7 @@
                 android:textColor="@color/light_gray"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/circle_5"
+                app:layout_constraintStart_toEndOf="@id/circle_russian"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

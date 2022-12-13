@@ -11,8 +11,8 @@ import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
@@ -29,11 +29,6 @@ public class HomeViewModel extends ViewModel {
     private String searchType;
     private String origin;
 
-
-//    private String listType(){
-//    ver como o type LISTA trará os nomes
-//        return listType;
-//    }
 
     public Boolean getShouldShowDialog(Menu menu) {
 
@@ -128,4 +123,14 @@ public class HomeViewModel extends ViewModel {
     public void setSearchType(String searchType) {
         this.searchType = searchType;
     }
+
+//    //Recuperar dados salvos
+//    SharedPreferences preferences =
+//            getSharedPreferences(TYPE_PREFERENCES, 0);
+//
+//    //Valida se temos o nome em preferências
+//        if(preferences.contains("list type")){
+//        String list = preferences.getString("list type", "grid");
+//        //fazer o que tem que fazr
+//    }
 }
