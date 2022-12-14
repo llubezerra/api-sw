@@ -125,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     public void onClickItem(Menu menu) {
         if(viewModel.getShouldShowDialog(menu)) {
             showBottomSheetChooseDialog(menu);
-        } else if(viewModel.getShoulShowMusic(menu)){
+        } else if(viewModel.getShouldShowMusic(menu)){
             showBottomSheetMusicDialog(menu);
         } else{
             viewModel.apiCallType(menu, this);

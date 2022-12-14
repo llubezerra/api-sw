@@ -41,7 +41,7 @@ public class HomeViewModel extends ViewModel {
 
     }
 
-    public Boolean getShoulShowMusic(Menu menu) {
+    public Boolean getShouldShowMusic(Menu menu) {
         return menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME");
     }
 
