@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,8 +48,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         //Listagem de itens
         this.criarMenu();
 
-        recyclerViewGrid();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        menuTypeList();
     }
 
     //Quando voltamos da Activity seguinte estaremos no onStop(), daí caímos no onRestart() e como não precisamos voltar com o dialog damos o dismiss
@@ -60,14 +63,18 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         if(bottomSheetDialog != null){
             bottomSheetDialog.dismiss();
         }
+    }
 
+    private void menuTypeList(){
         if(viewModel.listType(this) == true){
             menuType = "list";
-            //recyclerViewList();
-        }else{
-            Toast.makeText(this, "GRID", Toast.LENGTH_SHORT).show();
+            recyclerViewList();
+        }else if(viewModel.listType(this)){
             menuType = "grid";
-            //recyclerViewGrid();
+            recyclerViewGrid();
+        }else{
+            menuType = "grid";
+            recyclerViewGrid();
         }
     }
 

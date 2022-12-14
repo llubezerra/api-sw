@@ -36,16 +36,16 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        View itemMenuList;
         if(listType.equals("list")) {
-            View itemMenuList = LayoutInflater.from(parent.getContext())
+            itemMenuList = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.adapter_menu_list, parent, false);
-            return new MyViewHolder(itemMenuList);
 
         } else {
-            View itemMenuList = LayoutInflater.from(parent.getContext())
+            itemMenuList = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.adapter_menu_grid, parent, false);
-            return new MyViewHolder(itemMenuList);
         }
+        return new MyViewHolder(itemMenuList);
     }
 
     @Override
