@@ -9,6 +9,7 @@ import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_PLANETS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_RANDOM_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_BY_NAME_STARSHIPS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_INFORMATION_API_EXTRAS;
+import static com.cursoandoid.starwars.Constants.TYPE_PREFERENCES;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -124,13 +125,17 @@ public class HomeViewModel extends ViewModel {
         this.searchType = searchType;
     }
 
-//    //Recuperar dados salvos
-//    SharedPreferences preferences =
-//            getSharedPreferences(TYPE_PREFERENCES, 0);
-//
-//    //Valida se temos o nome em preferências
-//        if(preferences.contains("list type")){
-//        String list = preferences.getString("list type", "grid");
-//        //fazer o que tem que fazr
-//    }
+    public Boolean listType(AppCompatActivity context){
+        //Recuperar dados salvos
+        SharedPreferences preferences = context.getSharedPreferences(TYPE_PREFERENCES, 0);
+
+        //Valida se temos o nome em preferências
+        String menuType = preferences.getString("list_type", "");
+        if(menuType.equals("list")){
+            return true;
+
+        }
+        return false;
+    }
+
 }

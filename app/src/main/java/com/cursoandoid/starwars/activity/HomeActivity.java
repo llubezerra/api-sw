@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     private ActivityHomeBinding binding;
     private HomeViewModel viewModel;
     private List<Menu> listMenu = new ArrayList<>();
-    private String list, grid;
+    private String menuType;
 
     private MediaPlayer mediaPlayer;
 
@@ -59,11 +60,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         if(bottomSheetDialog != null){
             bottomSheetDialog.dismiss();
         }
+
+        if(viewModel.listType(this) == true){
+            menuType = "list";
+            //recyclerViewList();
+        }else{
+            Toast.makeText(this, "GRID", Toast.LENGTH_SHORT).show();
+            menuType = "grid";
+            //recyclerViewGrid();
+        }
     }
 
     private void recyclerViewGrid(){
         //Configurar adapter
-        AdapterMenu adapter = new AdapterMenu(listMenu, this, grid, this);
+        AdapterMenu adapter = new AdapterMenu(listMenu, this, menuType, this);
 
         //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManagerGrid = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false);
@@ -73,7 +83,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
     private void recyclerViewList(){
         //Configurar adapter
-        AdapterMenu adapter = new AdapterMenu(listMenu, this, list, this);
+        AdapterMenu adapter = new AdapterMenu(listMenu, this, menuType, this);
 
         //Configurar RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
