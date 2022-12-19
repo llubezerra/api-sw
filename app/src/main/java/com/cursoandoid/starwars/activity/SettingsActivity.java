@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        sharedPreferencesSave();
+        sharedPreferencesListOrGrid();
     }
 
     @Override
@@ -82,9 +82,30 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.clPortuguese.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.clEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        binding.clRussian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
-    private void sharedPreferencesSave() {
+    private void sharedPreferencesListOrGrid() {
         //Recuperar dados salvos
         SharedPreferences preferences = getSharedPreferences(TYPE_PREFERENCES, 0);
 
