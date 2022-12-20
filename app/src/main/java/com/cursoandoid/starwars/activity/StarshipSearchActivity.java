@@ -8,8 +8,8 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -39,6 +39,8 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.blue_gray));
 
         //Use ViewModel
         viewModel = new ViewModelProvider(this).get(StarshipSearchViewModel.class);

@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,6 +46,8 @@ public class RandomSearchActivity extends DefaultSearchActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange_dark));
 
         //Use ViewModel
         viewModel = new ViewModelProvider(this).get(RandomSearchViewModel.class);
