@@ -53,7 +53,6 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
         Random random = new Random();
         screen = random.nextInt(3);
-        System.out.println(screen);
 
         setupNavigation();
         whereDoWeGo();

@@ -12,11 +12,9 @@
     <string name="spaceships">ESPAÇONAVES</string>
     <string name="planets">PLANETAS</string>
     <string name="characters">PERSONAGENS</string>
+    <string name="starship_hint">Ex.: Star Destroyer</string>
     <string name="hint">Ex.: Yavin IV</string>
-    <string name="title_activity_main2">MainActivity2</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_failure">ENCONTRADO,\nNADA FOI.</string>
     <string name="list_type">TIPO DE LISTA NA HOME</string>
     <string name="grid">GRID</string>
     <string name="list">LISTA</string>
@@ -25,6 +23,7 @@
     <string name="english">INGLÊS</string>
     <string name="russian">RUSSO</string>
 
+    <!-- Bottom Sheet -->
     <string name="choose_wisely">ESCOLHA SABIAMENTE...</string>
     <string name="search_all">Buscar tudo</string>
     <string name="search_by_name">Buscar por nome</string>
