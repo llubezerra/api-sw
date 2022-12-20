@@ -152,9 +152,9 @@ public class RandomSearchFragment extends Fragment {
     }
 
     public void onFailure(){
-        //visible gone pro constraint
-        Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+        binding.clResult.setVisibility(View.GONE);
+        binding.clFailure.setVisibility(View.VISIBLE);
+        binding.failure.setTextColor(ContextCompat.getColor(context, R.color.dark_gray));
     }
 
     public void saveContext(Context context, int screen) {

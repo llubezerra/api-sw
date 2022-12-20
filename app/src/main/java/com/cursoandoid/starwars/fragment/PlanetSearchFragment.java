@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -87,9 +88,9 @@ public class PlanetSearchFragment extends Fragment {
     }
 
     public void onFailure() {
-        //visible gone pro constraint
-        Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+        binding.clResult.setVisibility(View.GONE);
+        binding.clFailure.setVisibility(View.VISIBLE);
+        binding.failure.setTextColor(ContextCompat.getColor(context, R.color.orange_super_dark));
     }
 
     public void saveContext(Context context) {

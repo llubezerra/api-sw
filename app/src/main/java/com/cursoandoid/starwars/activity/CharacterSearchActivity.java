@@ -128,7 +128,7 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
         fragment.saveContext(this);
 
         transaction.commit();
-        //sumir o search na mensagem de erro --> implementar
+
         binding.clSearch.setVisibility(View.GONE);
     }
 

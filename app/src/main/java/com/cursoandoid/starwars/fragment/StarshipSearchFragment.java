@@ -133,9 +133,8 @@ public class StarshipSearchFragment extends Fragment {
     }
 
     public void onFailure(){
-        //visible gone pro constraint
-        Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+        binding.clResult.setVisibility(View.GONE);
+        binding.clFailure.setVisibility(View.VISIBLE);
     }
 
     public void saveContext(Context context) {
