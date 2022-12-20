@@ -110,9 +110,8 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
     }
 
     public void onFailure(){
-        //visible gone pro constraint
-        Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+        binding.clFailure.setVisibility(View.VISIBLE);
     }
 
     private void goToFragment() {

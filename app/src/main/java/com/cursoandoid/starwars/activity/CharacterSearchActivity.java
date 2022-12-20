@@ -114,9 +114,8 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
     }
 
     public void onFailure(){
-        //visible gone pro constraint
-        Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-
+        binding.clFailure.setVisibility(View.VISIBLE);
+        binding.failure.setTextColor(ContextCompat.getColor(this, R.color.brown));
     }
 
     private void goToFragment() {
