@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,7 +65,6 @@ public class RandomSearchActivity extends DefaultSearchActivity {
         binding.text.setText(R.string.search_random);
         binding.editText.setHint(R.string.search_random);
         binding.getRoot().setBackgroundColor(ContextCompat.getColor(this, R.color.orange_light));
-        //binding.clSearch.setVisibility(View.GONE);
 
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
@@ -79,28 +79,20 @@ public class RandomSearchActivity extends DefaultSearchActivity {
         String searchExtras = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
 
         //Se usar == não vai!
-        if(Objects.equals(searchExtras, SEARCH_ALL_RANDOM_EXTRAS)) {
+        if (Objects.equals(searchExtras, SEARCH_ALL_RANDOM_EXTRAS)) {
             // ENTRAR NA TELA E ABRIR TUDO (Go fragment)
-            if(screen == 0){
-                System.out.println("Go Fragment");
-                Log.d("LOG", "Search: " + searchExtras);
-            } else if (screen == 1) {
-                System.out.println("Go Fragment");
-                Log.d("LOG", "Search: " + searchExtras);
-            } else {
-                System.out.println("Go Fragment");
-                Log.d("LOG", "Search: " + searchExtras);
-            }
+            goToFragment(screen);
+            Log.d("LOG", "Search: " + searchExtras);
         }
     }
 
-    private void callByName(int screen){
+    private void callByName(int screen) {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
         progressDialog.show();
 
-        if(screen == 0){
+        if (screen == 0) {
             //API CALL
             viewModel.callGetByNameStarships(search);
 
@@ -111,7 +103,7 @@ public class RandomSearchActivity extends DefaultSearchActivity {
                 public void onChanged(List<Starship> starships) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
-                    if(starships != null){
+                    if (starships != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                         generateDataListStarship(starships);
                     } else {
@@ -149,7 +141,7 @@ public class RandomSearchActivity extends DefaultSearchActivity {
                 public void onChanged(List<Character> characters) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
-                    if(characters != null){
+                    if (characters != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                         generateDataListCharacter(characters);
                     } else {
@@ -187,10 +179,25 @@ public class RandomSearchActivity extends DefaultSearchActivity {
         binding.textResults.setText(getString(R.string.results, adapterCharacterSearch.getItemCount()));
     }
 
-    public void onFailure(){
+    public void onFailure() {
         //visible gone pro constraint
         Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 
     }
+
+    private void goToFragment(int screen) {
+        //ir pra fragment
+        fragment = new RandomSearchFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+
+        fragment.saveContext(this, screen);
+
+        transaction.commit();
+        //sumir o search na mensagem de erro --> implementar
+        binding.clSearch.setVisibility(View.GONE);
+    }
+
 
 }
