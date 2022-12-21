@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Звездные войны</string>
+    <string name="choose_your_side">Выбери сторону силы, ты должен...</string>
+    <string name="search">Поиск...</string>
+    <string name="search_spaceships">Поиск космических кораблей</string>
+    <string name="search_planets">Поиск ПЛАНЕТЫ</string>
+    <string name="search_characters">Поиск ПЕРСОНАЖЕЙ</string>
+    <string name="search_random">СЛУЧАЙНЫЙ ПОИСК</string>
+    <string name="powered">При поддержке: Джордж Лукас</string>
+    <string name="settings">НАСТРОЙКИ</string>
+    <string name="sound">ВОСПРОИЗВЕДЕНИЕ ЗВУКА КЛАССИЧЕСКОГО ФИЛЬМА</string>
+    <string name="spaceships">КОСМИЧЕСКИЕ КОРАБЛИ</string>
+    <string name="planets">ПЛАНЕТЫ</string>
+    <string name="characters">СИМВОЛЫ</string>
+    <string name="starship_hint">например, звездный разрушитель</string>
+    <string name="hint">например, Явин</string>
+    <string name="title_failure">НАШЛИ,\\nНИЧЕГО НЕ БЫЛО.</string>
+    <string name="list_type">ТИП СПИСКА НА ДОМУ</string>
+    <string name="grid">СЕТКА</string>
+    <string name="list">СПИСОК</string>
+    <string name="language">ЯЗЫК ПРИЛОЖЕНИЯ</string>
+    <string name="portuguese">ПОРТУГАЛЬСКИЙ(BR)</string>
+    <string name="english">АНГЛИЙСКИЙ</string>
+    <string name="russian">РУССКИЙ</string>
+    <string name="choose_wisely">ВЫБИРАТЬ МУДРО...</string>
+    <string name="search_all">искать все</string>
+    <string name="search_by_name">искать по имени</string>
+    <string name="playing_sound">ВОСПРОИЗВЕДЕНИЕ ЗВУКА...</string>
+    <string name="stop_music">ОСТАНОВИТЬ МУЗЫКУ</string>
+    <string name="results">Результаты: %d</string>
+    <string name="name"><![CDATA[<b>Имя:</b>]]> %s</string>
+    <string name="crew"><![CDATA[<b>Экипаж:</b>]]> %s</string>
+    <string name="passengers"><![CDATA[<b>Пассажиры:</b>]]> %s</string>
+    <string name="height"><![CDATA[<b>Рост:</b>]]> %s</string>
+    <string name="eyes_color"><![CDATA[<b>Цвет глаз:</b>]]> %s</string>
+    <string name="population"><![CDATA[<b>Население:</b>]]> %s</string>
+    <string name="diameter"><![CDATA[<b>Диаметр:</b>]]> %s</string>
+</resources>

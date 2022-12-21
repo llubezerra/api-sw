@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Star Wars</string>
+    <string name="choose_your_side">CHOOSE THE SIDE OF FORCE, YOU MUST...</string>
+    <string name="search">Search...</string>
+    <string name="search_spaceships">Search SPACESHIPS</string>
+    <string name="search_planets">Search PLANETS</string>
+    <string name="search_characters">Search CHARACTERS</string>
+    <string name="search_random">RANDOM Search</string>
+    <string name="powered">Powered by: George Lucas</string>
+    <string name="settings">SETTINGS</string>
+    <string name="sound">PLAY CLASSIC MOVIE SOUND</string>
+    <string name="spaceships">SPACESHIPS</string>
+    <string name="planets">PLANETS</string>
+    <string name="characters">CHARACTERS</string>
+    <string name="starship_hint">e.g., Star Destroyer</string>
+    <string name="hint">e.g., Yavin IV</string>
+    <string name="title_failure">FOUND,\\nNOTHING WAS.</string>
+    <string name="list_type">TYPE OF LIST ON HOME</string>
+    <string name="grid">GRID</string>
+    <string name="list">LIST</string>
+    <string name="language">APP LANGUAGE</string>
+    <string name="portuguese">PORTUGUESE(BR)</string>
+    <string name="english">ENGLISH</string>
+    <string name="russian">RUSSIAN</string>
+    <string name="choose_wisely">CHOOSE WISELY...</string>
+    <string name="search_all">Search all</string>
+    <string name="search_by_name">Search by name</string>
+    <string name="playing_sound">PLAYING SOUND...</string>
+    <string name="stop_music">STOP MUSIC</string>
+    <string name="results">Results: %d</string>
+    <string name="name"><![CDATA[<b>Name:</b>]]> %s</string>
+    <string name="crew"><![CDATA[<b>Crew:</b>]]> %s</string>
+    <string name="passengers"><![CDATA[<b>Passengers:</b>]]> %s</string>
+    <string name="height"><![CDATA[<b>Height:</b>]]> %s</string>
+    <string name="eyes_color"><![CDATA[<b>Eye color:</b>]]> %s</string>
+    <string name="population"><![CDATA[<b>Population:</b>]]> %s</string>
+    <string name="diameter"><![CDATA[<b>Diameter:</b>]]> %s</string>
+</resources>
