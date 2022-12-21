@@ -22,6 +22,7 @@
     <string name="portuguese">PORTUGUÊS(BR)</string>
     <string name="english">INGLÊS</string>
     <string name="russian">RUSSO</string>
+    <string name="restart">Reinicie o aplicativo</string>
 
     <!-- Bottom Sheet -->
     <string name="choose_wisely">ESCOLHA SABIAMENTE...</string>

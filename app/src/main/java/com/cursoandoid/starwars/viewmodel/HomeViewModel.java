@@ -1,5 +1,6 @@
 package com.cursoandoid.starwars.viewmodel;
 
+import static com.cursoandoid.starwars.Constants.LANGUAGE_PREFERENCES;
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_CHARACTERS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_PLANETS_EXTRAS;
 import static com.cursoandoid.starwars.Constants.SEARCH_ALL_RANDOM_EXTRAS;
@@ -18,6 +19,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 
+import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.activity.CharacterSearchActivity;
 import com.cursoandoid.starwars.activity.PlanetSearchActivity;
 import com.cursoandoid.starwars.activity.RandomSearchActivity;
@@ -31,63 +33,51 @@ public class HomeViewModel extends ViewModel {
     private String origin;
 
 
-    public Boolean getShouldShowDialog(Menu menu) {
+    public Boolean getShouldShowDialog(Menu menu, AppCompatActivity context) {
 
-        if(!(menu.getText().equals("CONFIGURAÇÕES")) && !(menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME"))){
-            //colocar esses nomes em constantes pois não funciona o r.string
-            return true;
-        }
-        return false;
-
+        return !(menu.getText().equals(context.getString(R.string.settings)) && !(menu.getText().equals(context.getString(R.string.sound))));
     }
 
-    public Boolean getShouldShowMusic(Menu menu) {
-        return menu.getText().equals("REPRODUZIR SOM CLÁSSICO DO FILME");
+    public Boolean getShouldShowMusic(Menu menu, AppCompatActivity context) {
+        return menu.getText().equals(context.getString(R.string.sound));
     }
 
     //pegar a posição do Menu, o searchType e definir o put extras ou a tela
     public void apiCallType(Menu menu, AppCompatActivity context) {
-        switch (menu.getText()) {
-            case "Buscar ESPAÇONAVES":
-                if (searchType == "all") {
-                    origin = SEARCH_ALL_STARSHIPS_EXTRAS;
-                } else if (searchType == "byName") {
-                    origin = SEARCH_BY_NAME_STARSHIPS_EXTRAS;
-                }
-                openSearch(context);
-                break;
-            case "Buscar PLANETAS":
-                if (searchType == "all") {
-                    origin = SEARCH_ALL_PLANETS_EXTRAS;
-                } else if (searchType == "byName") {
-                    origin = SEARCH_BY_NAME_PLANETS_EXTRAS;
-                }
-                openSearch(context);
-                break;
-            case "Buscar PERSONAGENS":
-                if (searchType == "all") {
-                    origin = SEARCH_ALL_CHARACTERS_EXTRAS;
-                } else if (searchType == "byName") {
-                    origin = SEARCH_BY_NAME_CHARACTERS_EXTRAS;
-                }
-                openSearch(context);
-                break;
-            case "Busca ALEATÓRIA":
-                if (searchType == "all") {
-                    origin = SEARCH_ALL_RANDOM_EXTRAS;
-                } else if (searchType == "byName") {
-                    origin = SEARCH_BY_NAME_RANDOM_EXTRAS;
-                }
-                openSearch(context);
-                break;
-            case "CONFIGURAÇÕES":
-                Intent settings = new Intent(context, SettingsActivity.class);
-                context.startActivity(settings);
-                break;
-//            case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
-//                Toast.makeText(context, "Sonzim", Toast.LENGTH_SHORT).show();
-//                break;
+        if(menu.getText().equals(context.getString(R.string.search_spaceships))){
+            if (searchType == "all") {
+                origin = SEARCH_ALL_STARSHIPS_EXTRAS;
+            } else if (searchType == "byName") {
+                origin = SEARCH_BY_NAME_STARSHIPS_EXTRAS;
+            }
+            openSearch(context);
+        } else if(menu.getText().equals(context.getString(R.string.search_planets))){
+            if (searchType == "all") {
+                origin = SEARCH_ALL_PLANETS_EXTRAS;
+            } else if (searchType == "byName") {
+                origin = SEARCH_BY_NAME_PLANETS_EXTRAS;
+            }
+            openSearch(context);
+        } else if(menu.getText().equals(context.getString(R.string.search_characters))){
+            if (searchType == "all") {
+                origin = SEARCH_ALL_CHARACTERS_EXTRAS;
+            } else if (searchType == "byName") {
+                origin = SEARCH_BY_NAME_CHARACTERS_EXTRAS;
+            }
+            openSearch(context);
+        } else if(menu.getText().equals(context.getString(R.string.search_random))){
+            if (searchType == "all") {
+                origin = SEARCH_ALL_RANDOM_EXTRAS;
+            } else if (searchType == "byName") {
+                origin = SEARCH_BY_NAME_RANDOM_EXTRAS;
+            }
+            openSearch(context);
+        } else if(menu.getText().equals(context.getString(R.string.settings))) {
+            Intent settings = new Intent(context, SettingsActivity.class);
+            context.startActivity(settings);
         }
+
+//      case "REPRODUZIR SOM CLÁSSICO \nDO FILME":
         Log.d("LOG", "aqui: " + origin);
     }
 
@@ -136,6 +126,13 @@ public class HomeViewModel extends ViewModel {
 
         }
         return false;
+    }
+
+    public String language(AppCompatActivity context) {
+        //Recuperar dados salvos
+        SharedPreferences preferences = context.getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+
+        return preferences.getString("language_preferences", "");
     }
 
 }

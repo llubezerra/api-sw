@@ -15,10 +15,10 @@ public class Constants {
 
 
     //CONSTANTES GERAL
-    public static final String RANDOM_SEARCH = "Busca ALEATÓRIA";
 
     /** shared preferences */
     //static -> o mesmo em todas as instâncias, final -> valor imutável
     public static final String TYPE_PREFERENCES = "typePreferences";
+    public static final String LANGUAGE_PREFERENCES = "languagePreferences";
 
 }

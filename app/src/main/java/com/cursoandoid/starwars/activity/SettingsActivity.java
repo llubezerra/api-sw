@@ -1,14 +1,16 @@
 package com.cursoandoid.starwars.activity;
 
+import static com.cursoandoid.starwars.Constants.LANGUAGE_PREFERENCES;
 import static com.cursoandoid.starwars.Constants.TYPE_PREFERENCES;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.cursoandoid.starwars.Constants;
 import com.cursoandoid.starwars.R;
@@ -18,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding binding;
 
     private String listType;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         sharedPreferencesListOrGrid();
+        sharedPreferencesLanguage();
     }
 
     @Override
@@ -85,21 +89,48 @@ public class SettingsActivity extends AppCompatActivity {
         binding.clPortuguese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                SharedPreferences.Editor editor = preferences.edit();
 
+                language = "pt";
+                setPortuguese();
+
+                editor.putString("language_preferences", language);
+                editor.commit();
+
+                Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.clEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                SharedPreferences.Editor editor = preferences.edit();
 
+                language = "en";
+                setEnglish();
+
+                editor.putString("language_preferences", language);
+                editor.commit();
+
+                Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.clRussian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                SharedPreferences.Editor editor = preferences.edit();
 
+                language = "ru";
+                setRussian();
+
+                editor.putString("language_preferences", language);
+                editor.commit();
+
+                Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,6 +157,60 @@ public class SettingsActivity extends AppCompatActivity {
             binding.textList.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
         }
 
+    }
+
+    private void sharedPreferencesLanguage() {
+        //Recuperar dados salvos
+        SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+
+        //Valida se temos o nome em preferências
+        String type = preferences.getString("language_preferences", "");
+
+        switch (type) {
+            case "pt":
+                setPortuguese();
+                break;
+            case "en":
+                setEnglish();
+                break;
+            case "ru":
+                setRussian();
+                break;
+        }
+
+    }
+
+    private void setPortuguese() {
+        binding.circlePortuguese.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_orange));
+        binding.textPortuguese.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.orange));
+
+        binding.circleEnglish.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textEnglish.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
+
+        binding.circleRussian.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textRussian.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
+    }
+
+    private void setEnglish() {
+        binding.circleEnglish.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_orange));
+        binding.textEnglish.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.orange));
+
+        binding.circlePortuguese.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textPortuguese.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
+
+        binding.circleRussian.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textRussian.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
+    }
+
+    private void setRussian() {
+        binding.circleRussian.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_orange));
+        binding.textRussian.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.orange));
+
+        binding.circlePortuguese.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textPortuguese.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.white));
+
+        binding.circleEnglish.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
+        binding.textEnglish.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
     }
 
 }

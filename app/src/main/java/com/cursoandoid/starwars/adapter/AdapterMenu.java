@@ -54,7 +54,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.MyViewHolder> 
         Menu menu = listMenu.get(position);
         holder.text.setText(menu.getText());
         holder.image.setImageDrawable(menu.getImage());
-        if (menu.getText().equals(Constants.RANDOM_SEARCH)) {
+        if (menu.getText().equals(context.getString(R.string.search_random))) {
             holder.color.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_home_special));
         }
     }

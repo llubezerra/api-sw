@@ -1,6 +1,7 @@
 package com.cursoandoid.starwars.activity;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -25,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemMenuHomeClickListener {
     private ActivityHomeBinding binding;
@@ -45,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        setLanguage();
         //Listagem de itens
         this.criarMenu();
 
@@ -66,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     }
 
     private void menuTypeList(){
-        if(viewModel.listType(this) == true){
+        if(viewModel.listType(this)){
             menuType = "list";
             recyclerViewList();
         }else if(viewModel.listType(this)){
@@ -98,6 +101,17 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         binding.recyclerMenuList.setAdapter(adapter);
     }
 
+    private void setLanguage(){
+        String language = viewModel.language(this);
+
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
     private void criarMenu() {
 
         Menu menu = new Menu(ContextCompat.getDrawable(this, R.drawable.starship), getString(R.string.search_spaceships));
@@ -123,9 +137,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     //Evento de click
     @Override
     public void onClickItem(Menu menu) {
-        if(viewModel.getShouldShowDialog(menu)) {
+        if(viewModel.getShouldShowDialog(menu, this)) {
             showBottomSheetChooseDialog(menu);
-        } else if(viewModel.getShouldShowMusic(menu)){
+        } else if(viewModel.getShouldShowMusic(menu, this)){
             showBottomSheetMusicDialog(menu);
         } else{
             viewModel.apiCallType(menu, this);

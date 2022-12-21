@@ -36,4 +36,5 @@
     <string name="eyes_color"><![CDATA[<b>Eye color:</b>]]> %s</string>
     <string name="population"><![CDATA[<b>Population:</b>]]> %s</string>
     <string name="diameter"><![CDATA[<b>Diameter:</b>]]> %s</string>
+    <string name="restart">Restart the app</string>
 </resources>
