@@ -35,7 +35,7 @@ public class HomeViewModel extends ViewModel {
 
     public Boolean getShouldShowDialog(Menu menu, AppCompatActivity context) {
 
-        return !(menu.getText().equals(context.getString(R.string.settings)) && !(menu.getText().equals(context.getString(R.string.sound))));
+        return (!menu.getText().equals(context.getString(R.string.settings)) && !menu.getText().equals(context.getString(R.string.sound)));
     }
 
     public Boolean getShouldShowMusic(Menu menu, AppCompatActivity context) {

@@ -15,7 +15,7 @@
     <string name="characters">CHARACTERS</string>
     <string name="starship_hint">e.g., Star Destroyer</string>
     <string name="hint">e.g., Yavin IV</string>
-    <string name="title_failure">FOUND,\\nNOTHING WAS.</string>
+    <string name="title_failure">FOUND,\nNOTHING WAS.</string>
     <string name="list_type">TYPE OF LIST ON HOME</string>
     <string name="grid">GRID</string>
     <string name="list">LIST</string>

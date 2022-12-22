@@ -15,7 +15,7 @@
     <string name="characters">СИМВОЛЫ</string>
     <string name="starship_hint">например, звездный разрушитель</string>
     <string name="hint">например, Явин</string>
-    <string name="title_failure">НАШЛИ,\\nНИЧЕГО НЕ БЫЛО.</string>
+    <string name="title_failure">НАШЛИ,\nНИЧЕГО НЕ БЫЛО.</string>
     <string name="list_type">ТИП СПИСКА НА ДОМУ</string>
     <string name="grid">СЕТКА</string>
     <string name="list">СПИСОК</string>

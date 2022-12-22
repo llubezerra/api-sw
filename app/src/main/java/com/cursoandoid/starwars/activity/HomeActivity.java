@@ -41,13 +41,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Show all layout in the right language
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        setLanguage();
+
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getWindow().setStatusBarColor(Color.BLACK);
 
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-        setLanguage();
         //Listagem de itens
         this.criarMenu();
 
