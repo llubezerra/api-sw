@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
+import com.cursoandoid.starwars.adapter.SwapiAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
 import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
 import java.util.List;
@@ -77,7 +79,7 @@ public class StarshipSearchFragment extends Fragment {
 
     private StarshipSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
-    private AdapterStarshipSearch adapter;
+    private SwapiAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,13 +106,13 @@ public class StarshipSearchFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(StarshipSearchViewModel.class);
 
         //API CALL
-        viewModel.callGetAllStarships();
+        viewModel.callGetAllStarships(requireActivity());
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<Starship>>() {
+        viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
             @Override
-            public void onChanged(List<Starship> starships) {
+            public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if(starships != null){
@@ -123,8 +125,8 @@ public class StarshipSearchFragment extends Fragment {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Starship> starshipList) {
-        adapter = new AdapterStarshipSearch(context, starshipList);
+    private void generateDataList(List<SwapiObject> starshipList) {
+        adapter = new SwapiAdapter(starshipList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

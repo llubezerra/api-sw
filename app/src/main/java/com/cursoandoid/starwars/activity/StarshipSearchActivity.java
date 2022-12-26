@@ -18,9 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.UtilsGeneric;
-import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
+import com.cursoandoid.starwars.adapter.SwapiAdapter;
 import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
 import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     private StarshipSearchViewModel viewModel;
     private StarshipSearchFragment fragment;
-    private AdapterStarshipSearch adapter;
+    private SwapiAdapter adapter;
 
     ProgressDialog progressDialog;
 
@@ -86,9 +87,9 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(this, new Observer<List<Starship>>() {
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
             @Override
-            public void onChanged(List<Starship> starships) {
+            public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if(starships != null){
@@ -103,8 +104,8 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Starship> starshipList) {
-        adapter = new AdapterStarshipSearch(this, starshipList);
+    private void generateDataList(List<SwapiObject> starshipList) {
+        adapter = new SwapiAdapter(starshipList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

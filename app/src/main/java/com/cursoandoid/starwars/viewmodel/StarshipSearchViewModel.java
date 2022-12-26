@@ -1,8 +1,10 @@
 package com.cursoandoid.starwars.viewmodel;
 
+import android.app.Activity;
+
 import androidx.lifecycle.LiveData;
 
-import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.SwapiObject;
 
 import java.util.List;
 
@@ -21,11 +23,11 @@ public class StarshipSearchViewModel extends DefaultSearchViewModel {
     }
 
     @Override
-    public void callGetAllStarships() {
-        super.callGetAllStarships();
+    public void callGetAllStarships(Activity context) {
+        super.callGetAllStarships(context);
     }
 
-    public LiveData<List<Starship>> getDataListDone() {
+    public LiveData<List<SwapiObject>> getDataListDone() {
         return dataListStarship;
     }
 

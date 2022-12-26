@@ -21,10 +21,12 @@ import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
 import com.cursoandoid.starwars.adapter.AdapterPlanetSearch;
 import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
+import com.cursoandoid.starwars.adapter.SwapiAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
 import com.cursoandoid.starwars.model.Character;
 import com.cursoandoid.starwars.model.Planet;
 import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.RandomSearchViewModel;
 
 import java.util.List;
@@ -68,13 +70,13 @@ public class RandomSearchFragment extends Fragment {
 
         if(screen == 0) {
             //API CALL
-            viewModel.callGetAllStarships();
+            viewModel.callGetAllStarships(requireActivity());
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListStarship().observe(getViewLifecycleOwner(), new Observer<List<Starship>>() {
+            viewModel.getDataListStarship().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
                 @Override
-                public void onChanged(List<Starship> starships) {
+                public void onChanged(List<SwapiObject> starships) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if(starships != null){
