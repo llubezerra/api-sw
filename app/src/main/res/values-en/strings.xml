@@ -37,4 +37,6 @@
     <string name="population"><![CDATA[<b>Population:</b>]]> %s</string>
     <string name="diameter"><![CDATA[<b>Diameter:</b>]]> %s</string>
     <string name="restart">Restart the app</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>
