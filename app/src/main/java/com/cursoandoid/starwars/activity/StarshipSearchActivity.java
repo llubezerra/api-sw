@@ -46,9 +46,6 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         viewModel = new ViewModelProvider(this).get(StarshipSearchViewModel.class);
 
         setupNavigation();
-
-        //TODO: set status bar não tá ok
-        //getWindow().setStatusBarColor(Color.alpha(R.color.dark_gray));
     }
 
     private void setupNavigation() {

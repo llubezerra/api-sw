@@ -36,9 +36,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
     private List<Menu> listMenu = new ArrayList<>();
     private String menuType;
 
-    private MediaPlayer mediaPlayer;
+    BottomSheetDialog bottomSheetDialog, musicDialog;
 
-    BottomSheetDialog bottomSheetDialog;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,11 +179,29 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
 
     private void showBottomSheetMusicDialog(Menu menu) {
 
-        BottomSheetDialog musicDialog;
         musicDialog = new BottomSheetDialog(this);
         musicDialog.setContentView(R.layout.bottom_sheet_music_layout);
         musicDialog.show();
 
+        playMusic();
+
+        ConstraintLayout stop = musicDialog.findViewById(R.id.buttom_stop);
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopMusic();
+            }
+        });
+
+        musicDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                stopMusic();
+            }
+        });
+    }
+
+    private void playMusic() {
         //Toca a música
         mediaPlayer = MediaPlayer.create(this, R.raw.imperial_march);
         if (mediaPlayer != null) {
@@ -200,29 +218,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volumeMaximo, 0);
 
         }
+    }
 
-        ConstraintLayout stop = musicDialog.findViewById(R.id.buttom_stop);
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    musicDialog.dismiss();
-                }
-            }
-        });
-
-        //TODO separar método play e stop music
-        musicDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                Toast.makeText(HomeActivity.this, "Gone", Toast.LENGTH_SHORT).show();
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    musicDialog.dismiss();
-                }
-            }
-        });
+    private void stopMusic() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            musicDialog.dismiss();
+        }
     }
 
 }
