@@ -17,22 +17,22 @@ import com.cursoandoid.starwars.model.SwapiObject;
 
 import java.util.List;
 
-public class SwapiAdapter extends RecyclerView.Adapter<SwapiAdapter.MyViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
     private List<SwapiObject> dataList;
     private Context context;
 
-    public SwapiAdapter(List<SwapiObject> dataList, Context context) {
+    public SearchAdapter(List<SwapiObject> dataList, Context context) {
         this.dataList = dataList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public SwapiAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemSearchList = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_default_search, parent, false);
-        return new SwapiAdapter.MyViewHolder(itemSearchList);
+        return new MyViewHolder(itemSearchList);
     }
 
     @Override

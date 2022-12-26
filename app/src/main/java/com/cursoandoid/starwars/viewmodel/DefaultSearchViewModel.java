@@ -29,14 +29,10 @@ public class DefaultSearchViewModel extends ViewModel {
 
     ArrayList<SwapiObject> swapiObjects = new ArrayList<>();
 
-    protected final MutableLiveData<List<SwapiObject>> dataListStarship = new MutableLiveData<>();
-    protected final MutableLiveData<List<Planet>> dataListPlanet = new MutableLiveData<>();
-    protected final MutableLiveData<List<Character>> dataListCharacter = new MutableLiveData<>();
+    protected final MutableLiveData<List<SwapiObject>> dataList = new MutableLiveData<>();
 
-    /**
-     * GET STARSHIPS BY NAME
-     */
-    protected void callGetByNameStarships(String search) {
+    /** GET STARSHIPS BY NAME */
+    protected void callGetByNameStarships(String search, Activity context) {
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         //receber texto da Activity -> searchText
@@ -46,14 +42,14 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Starships> call, Response<Starships> response) {
                 if (response.body() != null) {
-                    dataListStarship.setValue(response.body().getResults());
+                    parseStarshipsToSwapiObject(response.body(), context);
                 }
             }
 
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListStarship.setValue(null);
+                dataList.setValue(null);
             }
 
         });
@@ -77,14 +73,14 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListStarship.setValue(null);
+                dataList.setValue(null);
             }
 
         });
     }
 
     /** GET PLANETS BY NAME */
-    protected void callGetByNamePlanets(String search) {
+    protected void callGetByNamePlanets(String search, Activity context) {
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         //receber texto da Activity -> searchText
@@ -94,21 +90,21 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Planets> call, Response<Planets> response) {
                 if (response.body() != null) {
-                    dataListPlanet.setValue(response.body().getResults());
+                    parsePlanetsToSwapiObject(response.body(), context);
                 }
             }
 
             @Override
             public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListPlanet.setValue(null);
+                dataList.setValue(null);
             }
 
         });
     }
 
     /** GET ALL PLANETS */
-    protected void callGetAllPlanets() {
+    protected void callGetAllPlanets(Activity context) {
         // Create handle for the RetrofitInstance interface
         // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -118,21 +114,21 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Planets> call, Response<Planets> response) {
                 if (response.body() != null) {
-                    dataListPlanet.setValue(response.body().getResults());
+                    parsePlanetsToSwapiObject(response.body(), context);
                 }
             }
 
             @Override
             public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListPlanet.setValue(null);
+                dataList.setValue(null);
             }
 
         });
     }
 
     /** GET CHARACTERS BY NAME */
-    protected void callGetByNameCharacters(String search) {
+    protected void callGetByNameCharacters(String search, Activity context) {
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         //receber texto da Activity -> searchText
@@ -142,23 +138,21 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Characters> call, Response<Characters> response) {
                 if (response.body() != null) {
-                    dataListCharacter.setValue(response.body().getResults());
+                    parseCharactersToSwapiObject(response.body(), context);
                 }
             }
 
             @Override
             public void onFailure(Call<Characters> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListCharacter.setValue(null);
+                dataList.setValue(null);
             }
 
         });
     }
 
-    /**
-     * GET ALL CHARACTERS
-     */
-    protected void callGetAllCharacters() {
+    /** GET ALL CHARACTERS */
+    protected void callGetAllCharacters(Activity context) {
         // Create handle for the RetrofitInstance interface
         // ENTRAR NA TELA ABRIR TUDO
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -167,14 +161,14 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Characters> call, Response<Characters> response) {
                 if (response.body() != null) {
-                    dataListCharacter.setValue(response.body().getResults());
+                    parseCharactersToSwapiObject(response.body(), context);
                 }
             }
 
             @Override
             public void onFailure(Call<Characters> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataListCharacter.setValue(null);
+                dataList.setValue(null);
             }
 
         });
@@ -185,16 +179,52 @@ public class DefaultSearchViewModel extends ViewModel {
 
         for (Starship starship : result) {
             SwapiObject swapiModel = new SwapiObject(
+                    // Change elements on view, wich is xml adapter_default_search
                     R.drawable.icon_circle_starship,
                     R.drawable.starship_2,
+                    // 2 formatos no mesmo textView
                     HtmlCompat.fromHtml(context.getString(R.string.name, starship.getName()), HtmlCompat.FROM_HTML_MODE_LEGACY),
                     HtmlCompat.fromHtml(context.getString(R.string.crew, starship.getCrew()), HtmlCompat.FROM_HTML_MODE_LEGACY),
-                    HtmlCompat.fromHtml(context.getString(R.string.passengers, starship.getPassengers()), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    HtmlCompat.fromHtml(context.getString(R.string.passengers, starship.getPassengers()), HtmlCompat.FROM_HTML_MODE_COMPACT)
             );
             swapiObjects.add(swapiModel);
 
         }
-        dataListStarship.setValue(swapiObjects);
+        dataList.setValue(swapiObjects);
+    }
+
+    private void parsePlanetsToSwapiObject(Planets body, Activity context) {
+        ArrayList<Planet> result = body.getResults();
+
+        for (Planet planet : result) {
+            SwapiObject swapiModel = new SwapiObject(
+                    R.drawable.icon_circle_planet,
+                    R.drawable.planet_2,
+                    HtmlCompat.fromHtml(context.getString(R.string.name, planet.getName()), HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    HtmlCompat.fromHtml(context.getString(R.string.population, planet.getPopulation()), HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    HtmlCompat.fromHtml(context.getString(R.string.passengers, planet.getDiameter()), HtmlCompat.FROM_HTML_MODE_COMPACT)
+            );
+            swapiObjects.add(swapiModel);
+
+        }
+        dataList.setValue(swapiObjects);
+    }
+
+    private void parseCharactersToSwapiObject(Characters body, Activity context) {
+        ArrayList<Character> result = body.getResults();
+
+        for (Character character : result) {
+            SwapiObject swapiModel = new SwapiObject(
+                    R.drawable.icon_circle_person,
+                    R.drawable.person,
+                    HtmlCompat.fromHtml(context.getString(R.string.name, character.getName()), HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    HtmlCompat.fromHtml(context.getString(R.string.height, character.getHeight()), HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    HtmlCompat.fromHtml(context.getString(R.string.eyes_color, character.getEyeColor()), HtmlCompat.FROM_HTML_MODE_COMPACT)
+            );
+            swapiObjects.add(swapiModel);
+
+        }
+        dataList.setValue(swapiObjects);
     }
 
 }

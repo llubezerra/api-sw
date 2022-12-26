@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
-import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
-import com.cursoandoid.starwars.adapter.SwapiAdapter;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
-import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
@@ -79,7 +76,7 @@ public class StarshipSearchFragment extends Fragment {
 
     private StarshipSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
-    private SwapiAdapter adapter;
+    private SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,7 +123,7 @@ public class StarshipSearchFragment extends Fragment {
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<SwapiObject> starshipList) {
-        adapter = new SwapiAdapter(starshipList, context);
+        adapter = new SearchAdapter(starshipList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

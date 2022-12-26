@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,9 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
-import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
-import com.cursoandoid.starwars.model.Character;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.CharacterSearchViewModel;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class CharacterSearchFragment extends Fragment {
 
     private CharacterSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
-    private AdapterCharacterSearch adapter;
+    private SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,13 +59,13 @@ public class CharacterSearchFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(CharacterSearchViewModel.class);
 
         //API CALL
-        viewModel.callGetAllCharacters();
+        viewModel.callGetAllCharacters(requireActivity());
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<Character>>() {
+        viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
             @Override
-            public void onChanged(List<Character> characters) {
+            public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if(characters != null){
@@ -79,8 +78,8 @@ public class CharacterSearchFragment extends Fragment {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Character> characterList) {
-        adapter = new AdapterCharacterSearch(context, characterList);
+    private void generateDataList(List<SwapiObject> characterList) {
+        adapter = new SearchAdapter(characterList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.UtilsGeneric;
-import com.cursoandoid.starwars.adapter.AdapterPlanetSearch;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.fragment.PlanetSearchFragment;
-import com.cursoandoid.starwars.model.Planet;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.PlanetSearchViewModel;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
 
     private PlanetSearchViewModel viewModel;
     private PlanetSearchFragment fragment;
-    private AdapterPlanetSearch adapter;
+    private SearchAdapter adapter;
 
     ProgressDialog progressDialog;
 
@@ -82,13 +82,13 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
         progressDialog.show();
 
         //API CALL
-        viewModel.callGetByNamePlanets(search);
+        viewModel.callGetByNamePlanets(search, this);
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(this, new Observer<List<Planet>>() {
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
             @Override
-            public void onChanged(List<Planet> planets) {
+            public void onChanged(List<SwapiObject> planets) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if (planets != null) {
@@ -102,8 +102,8 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Planet> planetList) {
-        adapter = new AdapterPlanetSearch(planetList, this);
+    private void generateDataList(List<SwapiObject> planetList) {
+        adapter = new SearchAdapter(planetList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

@@ -18,8 +18,8 @@ public class StarshipSearchViewModel extends DefaultSearchViewModel {
 //    }
 
     @Override
-    public void callGetByNameStarships(String search) {
-        super.callGetByNameStarships(search);
+    public void callGetByNameStarships(String search, Activity context) {
+        super.callGetByNameStarships(search, context);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class StarshipSearchViewModel extends DefaultSearchViewModel {
     }
 
     public LiveData<List<SwapiObject>> getDataListDone() {
-        return dataListStarship;
+        return dataList;
     }
 
 }

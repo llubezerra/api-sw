@@ -17,13 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.UtilsGeneric;
-import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
-import com.cursoandoid.starwars.adapter.AdapterPlanetSearch;
-import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.fragment.RandomSearchFragment;
-import com.cursoandoid.starwars.model.Character;
-import com.cursoandoid.starwars.model.Planet;
-import com.cursoandoid.starwars.model.Starship;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.RandomSearchViewModel;
 
 import java.util.List;
@@ -34,9 +30,7 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
     private RandomSearchViewModel viewModel;
     private RandomSearchFragment fragment;
-    private AdapterStarshipSearch adapterStarshipSearch;
-    private AdapterPlanetSearch adapterPlanetSearch;
-    private AdapterCharacterSearch adapterCharacterSearch;
+    private SearchAdapter adapter;
 
     ProgressDialog progressDialog;
 
@@ -94,18 +88,18 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
         if (screen == 0) {
             //API CALL
-            viewModel.callGetByNameStarships(search);
+            viewModel.callGetByNameStarships(search, this);
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListStarship().observe(this, new Observer<List<Starship>>() {
+            viewModel.getDataList().observe(this, new Observer<List<SwapiObject>>() {
                 @Override
-                public void onChanged(List<Starship> starships) {
+                public void onChanged(List<SwapiObject> starships) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if (starships != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
-                        generateDataListStarship(starships);
+                        generateDataList(starships);
                     } else {
                         onFailure();
                     }
@@ -113,18 +107,18 @@ public class RandomSearchActivity extends DefaultSearchActivity {
             });
         } else if (screen == 1) {
             //API CALL
-            viewModel.callGetByNamePlanets(search);
+            viewModel.callGetByNamePlanets(search, this);
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListPlanet().observe(this, new Observer<List<Planet>>() {
+            viewModel.getDataList().observe(this, new Observer<List<SwapiObject>>() {
                 @Override
-                public void onChanged(List<Planet> planets) {
+                public void onChanged(List<SwapiObject> planets) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if (planets != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
-                        generateDataListPlanet(planets);
+                        generateDataList(planets);
                     } else {
                         onFailure();
                     }
@@ -132,18 +126,18 @@ public class RandomSearchActivity extends DefaultSearchActivity {
             });
         } else {
             //API CALL
-            viewModel.callGetByNameCharacters(search);
+            viewModel.callGetByNameCharacters(search, this);
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListCharacter().observe(this, new Observer<List<Character>>() {
+            viewModel.getDataList().observe(this, new Observer<List<SwapiObject>>() {
                 @Override
-                public void onChanged(List<Character> characters) {
+                public void onChanged(List<SwapiObject> characters) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if (characters != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
-                        generateDataListCharacter(characters);
+                        generateDataList(characters);
                     } else {
                         onFailure();
                     }
@@ -153,30 +147,12 @@ public class RandomSearchActivity extends DefaultSearchActivity {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListStarship(List<Starship> starshipList) {
-        adapterStarshipSearch = new AdapterStarshipSearch(this, starshipList);
+    private void generateDataList(List<SwapiObject> dataList) {
+        adapter = new SearchAdapter(dataList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterStarshipSearch);
-        binding.textResults.setText(getString(R.string.results, adapterStarshipSearch.getItemCount()));
-    }
-
-    /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListPlanet(List<Planet> planetList) {
-        adapterPlanetSearch = new AdapterPlanetSearch(planetList, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterPlanetSearch);
-        binding.textResults.setText(getString(R.string.results, adapterPlanetSearch.getItemCount()));
-    }
-
-    /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListCharacter(List<Character> characterList) {
-        adapterCharacterSearch = new AdapterCharacterSearch(this, characterList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterCharacterSearch);
-        binding.textResults.setText(getString(R.string.results, adapterCharacterSearch.getItemCount()));
+        binding.recyclerSearchList.setAdapter(adapter);
+        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
     }
 
     public void onFailure() {

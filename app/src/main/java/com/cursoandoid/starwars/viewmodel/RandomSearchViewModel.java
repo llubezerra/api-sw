@@ -4,8 +4,6 @@ import android.app.Activity;
 
 import androidx.lifecycle.LiveData;
 
-import com.cursoandoid.starwars.model.Character;
-import com.cursoandoid.starwars.model.Planet;
 import com.cursoandoid.starwars.model.SwapiObject;
 
 import java.util.List;
@@ -13,8 +11,8 @@ import java.util.List;
 public class RandomSearchViewModel extends DefaultSearchViewModel{
 
     @Override
-    public void callGetByNameStarships(String search) {
-        super.callGetByNameStarships(search);
+    public void callGetByNameStarships(String search, Activity context) {
+        super.callGetByNameStarships(search, context);
     }
 
     @Override
@@ -23,32 +21,26 @@ public class RandomSearchViewModel extends DefaultSearchViewModel{
     }
 
     @Override
-    public void callGetByNamePlanets(String search) {
-        super.callGetByNamePlanets(search);
+    public void callGetByNamePlanets(String search, Activity context) {
+        super.callGetByNamePlanets(search, context);
     }
 
     @Override
-    public void callGetAllPlanets() {
-        super.callGetAllPlanets();
+    public void callGetAllPlanets(Activity context) {
+        super.callGetAllPlanets(context);
     }
 
     @Override
-    public void callGetByNameCharacters(String search) {
-        super.callGetByNameCharacters(search);
+    public void callGetByNameCharacters(String search, Activity context) {
+        super.callGetByNameCharacters(search, context);
     }
 
     @Override
-    public void callGetAllCharacters() {
-        super.callGetAllCharacters();
+    public void callGetAllCharacters(Activity context) {
+        super.callGetAllCharacters(context);
     }
 
-    public LiveData<List<SwapiObject>> getDataListStarship() {
-        return dataListStarship;
-    }
-    public LiveData<List<Planet>> getDataListPlanet() {
-        return dataListPlanet;
-    }
-    public LiveData<List<Character>> getDataListCharacter() {
-        return dataListCharacter;
+    public LiveData<List<SwapiObject>> getDataList() {
+        return dataList;
     }
 }

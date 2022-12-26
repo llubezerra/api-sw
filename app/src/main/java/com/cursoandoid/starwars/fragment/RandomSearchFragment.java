@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,14 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
-import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
-import com.cursoandoid.starwars.adapter.AdapterPlanetSearch;
-import com.cursoandoid.starwars.adapter.AdapterStarshipSearch;
-import com.cursoandoid.starwars.adapter.SwapiAdapter;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
-import com.cursoandoid.starwars.model.Character;
-import com.cursoandoid.starwars.model.Planet;
-import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.RandomSearchViewModel;
 
@@ -40,6 +33,7 @@ public class RandomSearchFragment extends Fragment {
 
     private RandomSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
+    private SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,13 +68,13 @@ public class RandomSearchFragment extends Fragment {
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListStarship().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
+            viewModel.getDataList().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
                 @Override
                 public void onChanged(List<SwapiObject> starships) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if(starships != null){
-                        generateDataListStarship(starships);
+                        generateDataList(starships);
                     } else {
                         onFailure();
                     }
@@ -88,17 +82,17 @@ public class RandomSearchFragment extends Fragment {
             });
         } else if (screen == 1) {
             //API CALL
-            viewModel.callGetAllPlanets();
+            viewModel.callGetAllPlanets(requireActivity());
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListPlanet().observe(getViewLifecycleOwner(), new Observer<List<Planet>>() {
+            viewModel.getDataList().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
                 @Override
-                public void onChanged(List<Planet> planets) {
+                public void onChanged(List<SwapiObject> planets) {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if (planets != null) {
-                        generateDataListPlanet(planets);
+                        generateDataList(planets);
                     } else {
                         onFailure();
                     }
@@ -107,50 +101,29 @@ public class RandomSearchFragment extends Fragment {
         }
         else {
             //API CALL
-            viewModel.callGetAllCharacters();
+            viewModel.callGetAllCharacters(requireActivity());
 
             // Create the observer which updates the UI.
             // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListCharacter().observe(getViewLifecycleOwner(), new Observer<List<Character>>() {
-                @Override
-                public void onChanged(List<Character> characters) {
+            viewModel.getDataList().observe(getViewLifecycleOwner(), characters -> {
                     // Update the UI, in this case, a list
                     progressDialog.dismiss();
                     if(characters != null){
-                        generateDataListCharacter(characters);
+                        generateDataList(characters);
                     } else {
                         onFailure();
                     }
-                }
             });
         }
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListStarship(List<Starship> starshipList) {
-        AdapterStarshipSearch adapterStarshipSearch = new AdapterStarshipSearch(context, starshipList);
+    private void generateDataList(List<SwapiObject> dataList) {
+        adapter = new SearchAdapter(dataList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterStarshipSearch);
-        binding.textResults.setText(getString(R.string.results, adapterStarshipSearch.getItemCount()));
-    }
-
-    /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListPlanet(List<Planet> planetList) {
-        AdapterPlanetSearch adapterPlanetSearch = new AdapterPlanetSearch(planetList, context);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterPlanetSearch);
-        binding.textResults.setText(getString(R.string.results, adapterPlanetSearch.getItemCount()));
-    }
-
-    /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataListCharacter(List<Character> characterList) {
-        AdapterCharacterSearch adapterCharacterSearch = new AdapterCharacterSearch(context, characterList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        binding.recyclerSearchList.setLayoutManager(layoutManager);
-        binding.recyclerSearchList.setAdapter(adapterCharacterSearch);
-        binding.textResults.setText(getString(R.string.results, adapterCharacterSearch.getItemCount()));
+        binding.recyclerSearchList.setAdapter(adapter);
+        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
     }
 
     public void onFailure(){

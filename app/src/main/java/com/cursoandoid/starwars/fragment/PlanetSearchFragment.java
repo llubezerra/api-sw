@@ -6,21 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
-import com.cursoandoid.starwars.adapter.AdapterPlanetSearch;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.databinding.FragmentDefaultSearchBinding;
-import com.cursoandoid.starwars.model.Planet;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.PlanetSearchViewModel;
 
 import java.util.List;
@@ -32,7 +30,7 @@ public class PlanetSearchFragment extends Fragment {
 
     private PlanetSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
-    private AdapterPlanetSearch adapter;
+    private SearchAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +45,6 @@ public class PlanetSearchFragment extends Fragment {
         binding = FragmentDefaultSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //String.valueOf(quantity);
-
         return view;
     }
 
@@ -60,27 +56,24 @@ public class PlanetSearchFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(PlanetSearchViewModel.class);
 
         //API CALL
-        viewModel.callGetAllPlanets();
+        viewModel.callGetAllPlanets(requireActivity());
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<Planet>>() {
-            @Override
-            public void onChanged(List<Planet> planets) {
-                // Update the UI, in this case, a list
-                progressDialog.dismiss();
-                if (planets != null) {
-                    generateDataList(planets);
-                } else {
-                    onFailure();
-                }
+        viewModel.getDataListDone().observe(getViewLifecycleOwner(), planets -> {
+            // Update the UI, in this case, a list
+            progressDialog.dismiss();
+            if (planets != null) {
+                generateDataList(planets);
+            } else {
+                onFailure();
             }
         });
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Planet> planetList) {
-        adapter = new AdapterPlanetSearch(planetList, context);
+    private void generateDataList(List<SwapiObject> planetList) {
+        adapter = new SearchAdapter(planetList, context);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

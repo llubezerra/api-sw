@@ -1,8 +1,10 @@
 package com.cursoandoid.starwars.viewmodel;
 
+import android.app.Activity;
+
 import androidx.lifecycle.LiveData;
 
-import com.cursoandoid.starwars.model.Planet;
+import com.cursoandoid.starwars.model.SwapiObject;
 
 import java.util.List;
 
@@ -10,17 +12,17 @@ public class PlanetSearchViewModel extends DefaultSearchViewModel {
     /** View Model da Activity e Fragment */
 
     @Override
-    public void callGetByNamePlanets(String search) {
-        super.callGetByNamePlanets(search);
+    public void callGetByNamePlanets(String search, Activity context) {
+        super.callGetByNamePlanets(search, context);
     }
 
     @Override
-    public void callGetAllPlanets() {
-        super.callGetAllPlanets();
+    public void callGetAllPlanets(Activity context) {
+        super.callGetAllPlanets(context);
     }
 
-    public LiveData<List<Planet>> getDataListDone() {
-        return dataListPlanet;
+    public LiveData<List<SwapiObject>> getDataListDone() {
+        return dataList;
     }
 
 }

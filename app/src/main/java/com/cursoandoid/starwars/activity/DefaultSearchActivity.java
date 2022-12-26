@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cursoandoid.starwars.databinding.ActivityDefaultSearchBinding;
-import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
 
 public abstract class DefaultSearchActivity extends AppCompatActivity {
     protected ActivityDefaultSearchBinding binding;

@@ -1,8 +1,10 @@
 package com.cursoandoid.starwars.viewmodel;
 
+import android.app.Activity;
+
 import androidx.lifecycle.LiveData;
 
-import com.cursoandoid.starwars.model.Character;
+import com.cursoandoid.starwars.model.SwapiObject;
 
 import java.util.List;
 
@@ -10,17 +12,17 @@ public class CharacterSearchViewModel extends DefaultSearchViewModel {
     /** View Model da Activity e Fragment */
 
     @Override
-    public void callGetByNameCharacters(String search) {
-        super.callGetByNameCharacters(search);
+    public void callGetByNameCharacters(String search, Activity context) {
+        super.callGetByNameCharacters(search, context);
     }
 
     @Override
-    public void callGetAllCharacters() {
-        super.callGetAllCharacters();
+    public void callGetAllCharacters(Activity context) {
+        super.callGetAllCharacters(context);
     }
 
-    public LiveData<List<Character>> getDataListDone() {
-        return dataListCharacter;
+    public LiveData<List<SwapiObject>> getDataListDone() {
+        return dataList;
     }
 
 }

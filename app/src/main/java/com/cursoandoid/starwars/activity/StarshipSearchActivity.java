@@ -18,9 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.UtilsGeneric;
-import com.cursoandoid.starwars.adapter.SwapiAdapter;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.fragment.StarshipSearchFragment;
-import com.cursoandoid.starwars.model.Starship;
 import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 
@@ -31,7 +30,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     private StarshipSearchViewModel viewModel;
     private StarshipSearchFragment fragment;
-    private SwapiAdapter adapter;
+    private SearchAdapter adapter;
 
     ProgressDialog progressDialog;
 
@@ -83,7 +82,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         progressDialog.show();
 
         //API CALL
-        viewModel.callGetByNameStarships(search);
+        viewModel.callGetByNameStarships(search, this);
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -105,7 +104,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<SwapiObject> starshipList) {
-        adapter = new SwapiAdapter(starshipList, this);
+        adapter = new SearchAdapter(starshipList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);

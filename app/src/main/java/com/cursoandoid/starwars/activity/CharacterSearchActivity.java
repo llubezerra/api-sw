@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cursoandoid.starwars.R;
 import com.cursoandoid.starwars.UtilsGeneric;
-import com.cursoandoid.starwars.adapter.AdapterCharacterSearch;
+import com.cursoandoid.starwars.adapter.SearchAdapter;
 import com.cursoandoid.starwars.fragment.CharacterSearchFragment;
-import com.cursoandoid.starwars.model.Character;
+import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.viewmodel.CharacterSearchViewModel;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
 
     private CharacterSearchViewModel viewModel;
     private CharacterSearchFragment fragment;
-    private AdapterCharacterSearch adapter;
+    private SearchAdapter adapter;
 
     ProgressDialog progressDialog;
 
@@ -85,13 +85,13 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
         progressDialog.show();
 
         //API CALL
-        viewModel.callGetByNameCharacters(search);
+        viewModel.callGetByNameCharacters(search, this);
 
         // Create the observer which updates the UI.
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.getDataListDone().observe(this, new Observer<List<Character>>() {
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
             @Override
-            public void onChanged(List<Character> characters) {
+            public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if(characters != null){
@@ -106,8 +106,8 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Character> characterList) {
-        adapter = new AdapterCharacterSearch(this, characterList);
+    private void generateDataList(List<SwapiObject> characterList) {
+        adapter = new SearchAdapter(characterList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
