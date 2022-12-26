@@ -22,6 +22,8 @@ public class SettingsActivity extends AppCompatActivity {
     private String listType;
     private String language;
 
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +54,12 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //MODE 0 -> PRIVADO: SÓ O NOSSO APP CONSEGUIRÁ SALVAR E LER ESSE ARQUIVO
-                SharedPreferences preferences = getSharedPreferences(Constants.TYPE_PREFERENCES, 0);
+                preferences = getSharedPreferences(Constants.TYPE_PREFERENCES, 0);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 listType = "grid";
                 editor.putString("list_type", listType);
-                editor.commit();
+                editor.apply();
 
                 binding.circleGrid.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_orange));
                 binding.textGrid.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.orange));
@@ -71,12 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //MODE 0 -> PRIVADO: SÓ O NOSSO APP CONSEGUIRÁ SALVAR E LER ESSE ARQUIVO
-                SharedPreferences preferences = getSharedPreferences(Constants.TYPE_PREFERENCES, 0);
+                preferences = getSharedPreferences(Constants.TYPE_PREFERENCES, 0);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 listType = "list";
                 editor.putString("list_type", listType);
-                editor.commit();
+                editor.apply();
 
                 binding.circleGrid.setImageDrawable(ContextCompat.getDrawable(SettingsActivity.this, R.drawable.circle_white));
                 binding.textGrid.setTextColor(ContextCompat.getColor(SettingsActivity.this, R.color.light_gray));
@@ -89,14 +91,14 @@ public class SettingsActivity extends AppCompatActivity {
         binding.clPortuguese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 language = "pt";
                 setPortuguese();
 
                 editor.putString("language_preferences", language);
-                editor.commit();
+                editor.apply();
 
                 Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }
@@ -105,14 +107,14 @@ public class SettingsActivity extends AppCompatActivity {
         binding.clEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 language = "en";
                 setEnglish();
 
                 editor.putString("language_preferences", language);
-                editor.commit();
+                editor.apply();
 
                 Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }
@@ -121,14 +123,14 @@ public class SettingsActivity extends AppCompatActivity {
         binding.clRussian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
+                preferences = getSharedPreferences(LANGUAGE_PREFERENCES, 0);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 language = "ru";
                 setRussian();
 
                 editor.putString("language_preferences", language);
-                editor.commit();
+                editor.apply();
 
                 Toast.makeText(SettingsActivity.this, getString(R.string.restart), Toast.LENGTH_SHORT).show();
             }

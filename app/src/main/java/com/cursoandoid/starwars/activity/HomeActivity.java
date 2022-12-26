@@ -1,6 +1,7 @@
 package com.cursoandoid.starwars.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -8,6 +9,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -203,6 +205,18 @@ public class HomeActivity extends AppCompatActivity implements AdapterMenu.ItemM
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    musicDialog.dismiss();
+                }
+            }
+        });
+
+        //TODO separar método play e stop music
+        musicDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                Toast.makeText(HomeActivity.this, "Gone", Toast.LENGTH_SHORT).show();
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.stop();
                     musicDialog.dismiss();

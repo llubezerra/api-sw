@@ -34,7 +34,6 @@ public class HomeViewModel extends ViewModel {
 
 
     public Boolean getShouldShowDialog(Menu menu, AppCompatActivity context) {
-
         return (!menu.getText().equals(context.getString(R.string.settings)) && !menu.getText().equals(context.getString(R.string.sound)));
     }
 
@@ -121,11 +120,7 @@ public class HomeViewModel extends ViewModel {
 
         //Valida se temos o nome em preferências
         String menuType = preferences.getString("list_type", "");
-        if(menuType.equals("list")){
-            return true;
-
-        }
-        return false;
+        return menuType.equals("list");
     }
 
     public String language(AppCompatActivity context) {
