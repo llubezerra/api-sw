@@ -11,14 +11,14 @@ public class Starships {
     @SerializedName("next")
     private String next;
     @SerializedName("previous")
-    private Object previus;
+    private String previous;
     @SerializedName("results")
     private ArrayList<Starship> results;
 
-    public Starships(Integer count, String next, Object previus, ArrayList<Starship> results) {
+    public Starships(Integer count, String next, String previous, ArrayList<Starship> results) {
         this.count = count;
         this.next = next;
-        this.previus = previus;
+        this.previous = previous;
         this.results = results;
     }
 
@@ -28,10 +28,6 @@ public class Starships {
 
     public String getNext() {
         return next;
-    }
-
-    public Object getPrevius() {
-        return previus;
     }
 
     public ArrayList<Starship> getResults() {
@@ -45,7 +41,7 @@ public class Starships {
 //        return "Starships{" +
 //                "count=" + count +
 //                ", next='" + next + '\'' +
-//                ", previus=" + previus +
+//                ", previous=" + previous +
 //                ", results=" + results +
 //                '}';
 //    }

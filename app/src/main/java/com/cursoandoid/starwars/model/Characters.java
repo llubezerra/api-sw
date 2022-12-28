@@ -11,14 +11,14 @@ public class Characters {
     @SerializedName("next")
     private String next;
     @SerializedName("previous")
-    private Object previus;
+    private String previous;
     @SerializedName("results")
     private ArrayList<Character> results;
 
-    public Characters(Integer count, String next, Object previus, ArrayList<Character> results) {
+    public Characters(Integer count, String next, String previous, ArrayList<Character> results) {
         this.count = count;
         this.next = next;
-        this.previus = previus;
+        this.previous = previous;
         this.results = results;
     }
 
@@ -28,10 +28,6 @@ public class Characters {
 
     public String getNext() {
         return next;
-    }
-
-    public Object getPrevius() {
-        return previus;
     }
 
     public ArrayList<Character> getResults() {

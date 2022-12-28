@@ -7,6 +7,7 @@ import com.cursoandoid.starwars.model.Starships;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface GetDataService {
 
@@ -22,15 +23,24 @@ public interface GetDataService {
     @GET("starships/")
     Call<Starships> getStarshipByName(@Query("search") String search);
 
+    @GET
+    Call<Starships> getPageStarships(@Url String url);
+
     @GET("people/")
     Call<Characters> getAllCharacters();
 
     @GET("people/")
     Call<Characters> getCharacterByName(@Query("search") String search);
 
+    @GET("people/?page=")
+    Call<Characters> getPageCharacters(@Url String url);
+
     @GET("planets/")
     Call<Planets> getAllPlanets();
 
     @GET("planets/")
     Call<Planets> getPlanetByName(@Query("search") String search);
+
+    @GET("planets/?page=")
+    Call<Planets> getPagePlanets(@Url String url);
 }

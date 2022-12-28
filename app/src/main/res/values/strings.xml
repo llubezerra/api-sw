@@ -23,8 +23,8 @@
     <string name="english">INGLÊS</string>
     <string name="russian">RUSSO</string>
     <string name="restart">Reinicie o aplicativo</string>
-    <string name="previous">Anterior</string>
-    <string name="next">Próximo</string>
+    <string name="more">Carregar mais resultados</string>
+    <string name="end">Fim da lista</string>
 
     <!-- Bottom Sheet -->
     <string name="choose_wisely">ESCOLHA SABIAMENTE...</string>
