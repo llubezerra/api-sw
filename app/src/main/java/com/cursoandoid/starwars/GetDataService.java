@@ -32,7 +32,7 @@ public interface GetDataService {
     @GET("people/")
     Call<Characters> getCharacterByName(@Query("search") String search);
 
-    @GET("people/?page=")
+    @GET
     Call<Characters> getPageCharacters(@Url String url);
 
     @GET("planets/")
@@ -41,6 +41,6 @@ public interface GetDataService {
     @GET("planets/")
     Call<Planets> getPlanetByName(@Query("search") String search);
 
-    @GET("planets/?page=")
+    @GET
     Call<Planets> getPagePlanets(@Url String url);
 }

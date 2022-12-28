@@ -200,6 +200,30 @@ public class DefaultSearchViewModel extends ViewModel {
         });
     }
 
+    /** GET CHARACTERS PAGINATION */
+    protected void callGetPaginationCharacters(String url, Activity context) {
+        // Create handle for the RetrofitInstance interface
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        //receber texto da Activity -> searchText
+        Call<Characters> call = service.getPageCharacters(url);
+        //O método do callback
+        call.enqueue(new Callback<Characters>() {
+            @Override
+            public void onResponse(Call<Characters> call, Response<Characters> response) {
+                if (response.body() != null) {
+                    parseCharactersToSwapiObject(response.body(), context);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Characters> call, Throwable t) {
+                Log.d("LOG", "onFailure: " + t.getMessage());
+                dataList.setValue(null);
+            }
+
+        });
+    }
+
     private void parseStarshipsToSwapiObject(Starships body, Activity context) {
         ArrayList<Starship> result = body.getResults();
         quantity = body.getCount();

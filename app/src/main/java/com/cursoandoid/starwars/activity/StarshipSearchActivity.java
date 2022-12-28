@@ -75,8 +75,6 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
                 nextPage();
         });
 
-//      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
-
     }
 
     public void callByName() {
@@ -139,7 +137,6 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
                 if(starships != null){
-                    binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(starships);
                     if(!viewModel.paginationNext()){
                         binding.loadMore.setText(getString(R.string.end));

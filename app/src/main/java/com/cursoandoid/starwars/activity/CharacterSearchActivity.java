@@ -35,6 +35,8 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
     ProgressDialog progressDialog;
 
     String search;
+    String url;
+    Integer page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +74,11 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
             callByName();
             UtilsGeneric.hideKeyboard(this);
         });
-    }
 
-    private void setupValues() {
-
+        binding.loadMore.setOnClickListener(v -> {
+            page++;
+            nextPage();
+        });
     }
 
     public void callByName() {
@@ -97,6 +100,9 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
                 if(characters != null){
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(characters);
+                    if(viewModel.enablePagination()){
+                        binding.loadMore.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     onFailure();
                 }
@@ -111,7 +117,60 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
+    }
+
+    private void nextPage() {
+
+        switch(page){
+            case 1:
+                url = "https://swapi.dev/api/people/?page=2";
+                break;
+            case 2:
+                url = "https://swapi.dev/api/people/?page=3";
+                break;
+            case 3:
+                url = "https://swapi.dev/api/people/?page=4";
+                break;
+            case 4:
+                url = "https://swapi.dev/api/people/?page=5";
+                break;
+            case 5:
+                url = "https://swapi.dev/api/people/?page=6";
+                break;
+            case 6:
+                url = "https://swapi.dev/api/people/?page=7";
+                break;
+            case 7:
+                url = "https://swapi.dev/api/people/?page=8";
+                break;
+            case 8:
+                url = "https://swapi.dev/api/people/?page=9";
+                break;
+        }
+
+        //API CALL
+        viewModel.callGetPaginationCharacters(url, this);
+
+        // Create the observer which updates the UI.
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
+            @Override
+            public void onChanged(List<SwapiObject> characters) {
+                // Update the UI, in this case, a list
+                progressDialog.dismiss();
+                if(characters != null){
+                    generateDataList(characters);
+                    if(!viewModel.paginationNext()){
+                        binding.loadMore.setText(getString(R.string.end));
+                        binding.loadMore.setEnabled(false);
+                    }
+                } else {
+                    onFailure();
+                }
+            }
+        });
+
     }
 
     public void onFailure(){

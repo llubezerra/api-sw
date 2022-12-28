@@ -33,6 +33,9 @@ public class CharacterSearchFragment extends Fragment {
     protected FragmentDefaultSearchBinding binding;
     private SearchAdapter adapter;
 
+    String url;
+    Integer page = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,12 +71,70 @@ public class CharacterSearchFragment extends Fragment {
             public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(characters != null){
+                if (characters != null) {
                     generateDataList(characters);
                 } else {
                     onFailure();
                 }
             }
+        });
+        nextPage();
+
+    }
+
+    private void nextPage() {
+
+        binding.loadMore.setOnClickListener(v -> {
+            page++;
+
+            switch (page) {
+                case 1:
+                    url = "https://swapi.dev/api/people/?page=2";
+                    break;
+                case 2:
+                    url = "https://swapi.dev/api/people/?page=3";
+                    break;
+                case 3:
+                    url = "https://swapi.dev/api/people/?page=4";
+                    break;
+                case 4:
+                    url = "https://swapi.dev/api/people/?page=5";
+                    break;
+                case 5:
+                    url = "https://swapi.dev/api/people/?page=6";
+                    break;
+                case 6:
+                    url = "https://swapi.dev/api/people/?page=7";
+                    break;
+                case 7:
+                    url = "https://swapi.dev/api/people/?page=8";
+                    break;
+                case 8:
+                    url = "https://swapi.dev/api/people/?page=9";
+                    break;
+            }
+
+            //API CALL
+            viewModel.callGetPaginationCharacters(url, requireActivity());
+
+            // Create the observer which updates the UI.
+            // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+            viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
+                @Override
+                public void onChanged(List<SwapiObject> characters) {
+                    // Update the UI, in this case, a list
+                    progressDialog.dismiss();
+                    if (characters != null) {
+                        generateDataList(characters);
+                        if (!viewModel.paginationNext()) {
+                            binding.loadMore.setText(getString(R.string.end));
+                            binding.loadMore.setEnabled(false);
+                        }
+                    } else {
+                        onFailure();
+                    }
+                }
+            });
         });
     }
 
@@ -83,7 +144,7 @@ public class CharacterSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
     }
 
     public void onFailure() {
@@ -92,7 +153,7 @@ public class CharacterSearchFragment extends Fragment {
         binding.failure.setTextColor(ContextCompat.getColor(context, R.color.brown));
     }
 
-    public void saveContext(Context context){
+    public void saveContext(Context context) {
         this.context = context;
     }
 

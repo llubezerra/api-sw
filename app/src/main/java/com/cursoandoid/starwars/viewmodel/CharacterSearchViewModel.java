@@ -25,4 +25,19 @@ public class CharacterSearchViewModel extends DefaultSearchViewModel {
         return dataList;
     }
 
+    @Override
+    public void callGetPaginationCharacters(String url, Activity context) {
+        super.callGetPaginationCharacters(url, context);
+    }
+
+    @Override
+    public Boolean enablePagination() {
+        return super.enablePagination();
+    }
+
+    @Override
+    public Boolean paginationNext() {
+        return super.paginationNext();
+    }
+
 }
