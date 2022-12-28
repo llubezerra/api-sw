@@ -35,6 +35,8 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
     ProgressDialog progressDialog;
 
     String search;
+    String url;
+    Integer page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,12 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
             callByName();
             UtilsGeneric.hideKeyboard(this);
         });
+
+        binding.loadMore.setOnClickListener(v -> {
+            page++;
+            nextPage();
+        });
+
     }
 
     public void callByName() {
@@ -94,6 +102,9 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
                 if (planets != null) {
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(planets);
+                    if(viewModel.enablePagination()){
+                        binding.loadMore.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     onFailure();
                 }
@@ -107,7 +118,34 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
+    }
+
+    private void nextPage() {
+
+            url = "https://swapi.dev/api/planets/?page=" + page;
+
+            //API CALL
+            viewModel.callGetPaginationPlanets(url, this);
+
+            // Create the observer which updates the UI.
+            // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+            viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
+                @Override
+                public void onChanged(List<SwapiObject> planets) {
+                    // Update the UI, in this case, a list
+                    progressDialog.dismiss();
+                    if(planets != null){
+                        generateDataList(planets);
+                        if(!viewModel.paginationNext()){
+                            binding.loadMore.setText(getString(R.string.end));
+                            binding.loadMore.setEnabled(false);
+                        }
+                    } else {
+                        onFailure();
+                    }
+                }
+            });
     }
 
     public void onFailure(){

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,9 @@ public class PlanetSearchFragment extends Fragment {
     private PlanetSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
     private SearchAdapter adapter;
+
+    String url;
+    Integer page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,10 +69,47 @@ public class PlanetSearchFragment extends Fragment {
             progressDialog.dismiss();
             if (planets != null) {
                 generateDataList(planets);
+                if (viewModel.enablePagination()) {
+                    binding.loadMore.setVisibility(View.VISIBLE);
+                }
             } else {
                 onFailure();
             }
         });
+        nextPage();
+
+    }
+
+    private void nextPage() {
+
+        binding.loadMore.setOnClickListener(v -> {
+            page++;
+
+            url = "https://swapi.dev/api/planets/?page=" + page;
+
+            //API CALL
+            viewModel.callGetPaginationPlanets(url, requireActivity());
+
+            // Create the observer which updates the UI.
+            // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+            viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
+                @Override
+                public void onChanged(List<SwapiObject> planets) {
+                    // Update the UI, in this case, a list
+                    progressDialog.dismiss();
+                    if (planets != null) {
+                        generateDataList(planets);
+                        if (!viewModel.paginationNext()) {
+                            binding.loadMore.setText(getString(R.string.end));
+                            binding.loadMore.setEnabled(false);
+                        }
+                    } else {
+                        onFailure();
+                    }
+                }
+            });
+        });
+
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
@@ -77,7 +118,7 @@ public class PlanetSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
     }
 
     public void onFailure() {

@@ -25,4 +25,19 @@ public class PlanetSearchViewModel extends DefaultSearchViewModel {
         return dataList;
     }
 
+    @Override
+    public void callGetPaginationPlanets(String url, Activity context) {
+        super.callGetPaginationPlanets(url, context);
+    }
+
+    @Override
+    public Boolean enablePagination() {
+        return super.enablePagination();
+    }
+
+    @Override
+    public Boolean paginationNext() {
+        return super.paginationNext();
+    }
+
 }

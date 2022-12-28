@@ -153,6 +153,30 @@ public class DefaultSearchViewModel extends ViewModel {
         });
     }
 
+    /** GET PLANETS PAGINATION */
+    protected void callGetPaginationPlanets(String url, Activity context) {
+        // Create handle for the RetrofitInstance interface
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        //receber texto da Activity -> searchText
+        Call<Planets> call = service.getPagePlanets(url);
+        //O método do callback
+        call.enqueue(new Callback<Planets>() {
+            @Override
+            public void onResponse(Call<Planets> call, Response<Planets> response) {
+                if (response.body() != null) {
+                    parsePlanetsToSwapiObject(response.body(), context);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Planets> call, Throwable t) {
+                Log.d("LOG", "onFailure: " + t.getMessage());
+                dataList.setValue(null);
+            }
+
+        });
+    }
+
     /** GET CHARACTERS BY NAME */
     protected void callGetByNameCharacters(String search, Activity context) {
         // Create handle for the RetrofitInstance interface
