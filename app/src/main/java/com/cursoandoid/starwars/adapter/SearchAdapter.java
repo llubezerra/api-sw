@@ -52,6 +52,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return dataList.size();
     }
 
+    public void cleanPreviousList() {
+        dataList.clear();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView text1;

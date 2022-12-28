@@ -26,7 +26,7 @@ import com.cursoandoid.starwars.viewmodel.StarshipSearchViewModel;
 import java.util.List;
 import java.util.Objects;
 
-public class StarshipSearchActivity extends DefaultSearchActivity{
+public class StarshipSearchActivity extends DefaultSearchActivity {
 
     private StarshipSearchViewModel viewModel;
     private StarshipSearchFragment fragment;
@@ -56,23 +56,26 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         String searchExtras = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
 
         //Se usar == não vai!
-        if(Objects.equals(searchExtras, SEARCH_ALL_STARSHIPS_EXTRAS)) {
+        if (Objects.equals(searchExtras, SEARCH_ALL_STARSHIPS_EXTRAS)) {
             // ENTRAR NA TELA E ABRIR TUDO (Go fragment)
             Log.d("LOG", "Search: " + searchExtras);
             goToFragment();
-        } else if(Objects.equals(searchExtras, SEARCH_BY_NAME_STARSHIPS_EXTRAS)) {
-            Log.d("LOG","Search: " + searchExtras);
+        } else if (Objects.equals(searchExtras, SEARCH_BY_NAME_STARSHIPS_EXTRAS)) {
+            Log.d("LOG", "Search: " + searchExtras);
         }
 
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
+            if (adapter != null) {
+                adapter.cleanPreviousList();
+            }
             callByName();
             UtilsGeneric.hideKeyboard(this);
         });
 
         binding.loadMore.setOnClickListener(v -> {
-                page++;
-                nextPage();
+            page++;
+            nextPage();
         });
 
     }
@@ -93,11 +96,13 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(starships != null){
+                if (starships != null) {
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(starships);
-                    if(viewModel.enablePagination()){
+                    if (viewModel.enablePagination()) {
                         binding.loadMore.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.loadMore.setVisibility(View.GONE);
                     }
                 } else {
                     onFailure();
@@ -118,11 +123,11 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     private void nextPage() {
 
-        if(page == 1){
+        if (page == 1) {
             url = "https://swapi.dev/api/starships/?page=2";
-        } else if(page == 2){
+        } else if (page == 2) {
             url = "https://swapi.dev/api/starships/?page=3";
-        } else if(page == 3){
+        } else if (page == 3) {
             url = "https://swapi.dev/api/starships/?page=4";
         }
 
@@ -136,9 +141,9 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(starships != null){
+                if (starships != null) {
                     generateDataList(starships);
-                    if(!viewModel.paginationNext()){
+                    if (!viewModel.paginationNext()) {
                         binding.loadMore.setText(getString(R.string.end));
                         binding.loadMore.setEnabled(false);
                     }
@@ -150,7 +155,7 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
 
     }
 
-    public void onFailure(){
+    public void onFailure() {
         //Toast.makeText(this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
         binding.clFailure.setVisibility(View.VISIBLE);
     }

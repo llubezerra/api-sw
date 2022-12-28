@@ -64,6 +64,9 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
+            if (adapter != null) {
+                adapter.cleanPreviousList();
+            }
             callByName(screen);
             UtilsGeneric.hideKeyboard(this);
         });
@@ -102,8 +105,10 @@ public class RandomSearchActivity extends DefaultSearchActivity {
                     if (starships != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                         generateDataList(starships);
-                        if(viewModel.enablePagination()){
+                        if (viewModel.enablePagination()) {
                             binding.loadMore.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.loadMore.setVisibility(View.GONE);
                         }
                     } else {
                         onFailure();
@@ -130,8 +135,10 @@ public class RandomSearchActivity extends DefaultSearchActivity {
                     if (planets != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                         generateDataList(planets);
-                        if(viewModel.enablePagination()){
+                        if (viewModel.enablePagination()) {
                             binding.loadMore.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.loadMore.setVisibility(View.GONE);
                         }
                     } else {
                         onFailure();
@@ -158,8 +165,10 @@ public class RandomSearchActivity extends DefaultSearchActivity {
                     if (characters != null) {
                         binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                         generateDataList(characters);
-                        if(viewModel.enablePagination()){
+                        if (viewModel.enablePagination()) {
                             binding.loadMore.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.loadMore.setVisibility(View.GONE);
                         }
                     } else {
                         onFailure();
@@ -186,11 +195,11 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
     private void nextPageStarships() {
 
-        if(page == 1){
+        if (page == 1) {
             url = "https://swapi.dev/api/starships/?page=2";
-        } else if(page == 2){
+        } else if (page == 2) {
             url = "https://swapi.dev/api/starships/?page=3";
-        } else if(page == 3){
+        } else if (page == 3) {
             url = "https://swapi.dev/api/starships/?page=4";
         }
 
@@ -204,9 +213,9 @@ public class RandomSearchActivity extends DefaultSearchActivity {
             public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(starships != null){
+                if (starships != null) {
                     generateDataList(starships);
-                    if(!viewModel.paginationNext()){
+                    if (!viewModel.paginationNext()) {
                         binding.loadMore.setText(getString(R.string.end));
                         binding.loadMore.setEnabled(false);
                     }
@@ -232,9 +241,9 @@ public class RandomSearchActivity extends DefaultSearchActivity {
             public void onChanged(List<SwapiObject> planets) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(planets != null){
+                if (planets != null) {
                     generateDataList(planets);
-                    if(!viewModel.paginationNext()){
+                    if (!viewModel.paginationNext()) {
                         binding.loadMore.setText(getString(R.string.end));
                         binding.loadMore.setEnabled(false);
                     }
@@ -248,7 +257,7 @@ public class RandomSearchActivity extends DefaultSearchActivity {
 
     private void nextPageCharacters() {
 
-        switch(page){
+        switch (page) {
             case 1:
                 url = "https://swapi.dev/api/people/?page=2";
                 break;
@@ -285,9 +294,9 @@ public class RandomSearchActivity extends DefaultSearchActivity {
             public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(characters != null){
+                if (characters != null) {
                     generateDataList(characters);
-                    if(!viewModel.paginationNext()){
+                    if (!viewModel.paginationNext()) {
                         binding.loadMore.setText(getString(R.string.end));
                         binding.loadMore.setEnabled(false);
                     }

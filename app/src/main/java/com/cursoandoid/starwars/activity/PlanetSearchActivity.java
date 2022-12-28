@@ -72,6 +72,9 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
 
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
+            if (adapter != null) {
+                adapter.cleanPreviousList();
+            }
             callByName();
             UtilsGeneric.hideKeyboard(this);
         });
@@ -102,8 +105,10 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
                 if (planets != null) {
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(planets);
-                    if(viewModel.enablePagination()){
+                    if (viewModel.enablePagination()) {
                         binding.loadMore.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.loadMore.setVisibility(View.GONE);
                     }
                 } else {
                     onFailure();
@@ -123,32 +128,32 @@ public class PlanetSearchActivity extends DefaultSearchActivity {
 
     private void nextPage() {
 
-            url = "https://swapi.dev/api/planets/?page=" + page;
+        url = "https://swapi.dev/api/planets/?page=" + page;
 
-            //API CALL
-            viewModel.callGetPaginationPlanets(url, this);
+        //API CALL
+        viewModel.callGetPaginationPlanets(url, this);
 
-            // Create the observer which updates the UI.
-            // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-            viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
-                @Override
-                public void onChanged(List<SwapiObject> planets) {
-                    // Update the UI, in this case, a list
-                    progressDialog.dismiss();
-                    if(planets != null){
-                        generateDataList(planets);
-                        if(!viewModel.paginationNext()){
-                            binding.loadMore.setText(getString(R.string.end));
-                            binding.loadMore.setEnabled(false);
-                        }
-                    } else {
-                        onFailure();
+        // Create the observer which updates the UI.
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
+            @Override
+            public void onChanged(List<SwapiObject> planets) {
+                // Update the UI, in this case, a list
+                progressDialog.dismiss();
+                if (planets != null) {
+                    generateDataList(planets);
+                    if (!viewModel.paginationNext()) {
+                        binding.loadMore.setText(getString(R.string.end));
+                        binding.loadMore.setEnabled(false);
                     }
+                } else {
+                    onFailure();
                 }
-            });
+            }
+        });
     }
 
-    public void onFailure(){
+    public void onFailure() {
         binding.clFailure.setVisibility(View.VISIBLE);
         binding.failure.setTextColor(ContextCompat.getColor(this, R.color.orange_super_dark));
     }

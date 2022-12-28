@@ -61,16 +61,19 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
         String searchExtras = getIntent().getStringExtra(SEARCH_INFORMATION_API_EXTRAS);
 
         //Se usar == não vai!
-        if(Objects.equals(searchExtras, SEARCH_ALL_CHARACTERS_EXTRAS)) {
+        if (Objects.equals(searchExtras, SEARCH_ALL_CHARACTERS_EXTRAS)) {
             // ENTRAR NA TELA E ABRIR TUDO (Go fragment)
             Log.d("LOG", "Search: " + searchExtras);
             goToFragment();
-        } else if(Objects.equals(searchExtras, SEARCH_BY_NAME_CHARACTERS_EXTRAS)) {
-            Log.d("LOG","Search: " + searchExtras);
+        } else if (Objects.equals(searchExtras, SEARCH_BY_NAME_CHARACTERS_EXTRAS)) {
+            Log.d("LOG", "Search: " + searchExtras);
         }
 
         binding.searchButton.setOnClickListener(v -> {
             search = binding.editText.getText().toString();
+            if (adapter != null) {
+                adapter.cleanPreviousList();
+            }
             callByName();
             UtilsGeneric.hideKeyboard(this);
         });
@@ -97,11 +100,13 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
             public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(characters != null){
+                if (characters != null) {
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(characters);
-                    if(viewModel.enablePagination()){
+                    if (viewModel.enablePagination()) {
                         binding.loadMore.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.loadMore.setVisibility(View.GONE);
                     }
                 } else {
                     onFailure();
@@ -122,7 +127,7 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
 
     private void nextPage() {
 
-        switch(page){
+        switch (page) {
             case 1:
                 url = "https://swapi.dev/api/people/?page=2";
                 break;
@@ -159,9 +164,9 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
             public void onChanged(List<SwapiObject> characters) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(characters != null){
+                if (characters != null) {
                     generateDataList(characters);
-                    if(!viewModel.paginationNext()){
+                    if (!viewModel.paginationNext()) {
                         binding.loadMore.setText(getString(R.string.end));
                         binding.loadMore.setEnabled(false);
                     }
@@ -173,7 +178,7 @@ public class CharacterSearchActivity extends DefaultSearchActivity {
 
     }
 
-    public void onFailure(){
+    public void onFailure() {
         binding.clFailure.setVisibility(View.VISIBLE);
         binding.failure.setTextColor(ContextCompat.getColor(this, R.color.brown));
     }

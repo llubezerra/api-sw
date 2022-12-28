@@ -51,7 +51,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -75,7 +74,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -99,7 +97,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Starships> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -123,7 +120,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -147,7 +143,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -171,7 +166,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Planets> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -195,7 +189,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Characters> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -218,7 +211,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Characters> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
@@ -242,7 +234,6 @@ public class DefaultSearchViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Characters> call, Throwable t) {
                 Log.d("LOG", "onFailure: " + t.getMessage());
-                dataList.setValue(null);
             }
 
         });
