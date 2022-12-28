@@ -70,13 +70,18 @@ public class StarshipSearchFragment extends Fragment {
         }
     }
 
-    /** POR ORA SÓ ESTOU USANDO ESSE */
+    /**
+     * POR ORA SÓ ESTOU USANDO ESSE
+     */
     Context context;
     ProgressDialog progressDialog;
 
     private StarshipSearchViewModel viewModel;
     protected FragmentDefaultSearchBinding binding;
     private SearchAdapter adapter;
+
+    String url;
+    Integer page = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,13 +117,56 @@ public class StarshipSearchFragment extends Fragment {
             public void onChanged(List<SwapiObject> starships) {
                 // Update the UI, in this case, a list
                 progressDialog.dismiss();
-                if(starships != null){
+                if (starships != null) {
                     generateDataList(starships);
+                    if (viewModel.enablePagination()) {
+                        binding.loadMore.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     onFailure();
                 }
             }
         });
+        nextPage();
+
+    }
+
+    private void nextPage() {
+
+        binding.loadMore.setOnClickListener(v -> {
+            page++;
+
+            if (page == 1) {
+                url = "https://swapi.dev/api/starships/?page=2";
+            } else if (page == 2) {
+                url = "https://swapi.dev/api/starships/?page=3";
+            } else if (page == 3) {
+                url = "https://swapi.dev/api/starships/?page=4";
+            }
+
+            //API CALL
+            viewModel.callGetPaginationStarships(url, requireActivity());
+
+            // Create the observer which updates the UI.
+            // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+            viewModel.getDataListDone().observe(getViewLifecycleOwner(), new Observer<List<SwapiObject>>() {
+                @Override
+                public void onChanged(List<SwapiObject> starships) {
+                    // Update the UI, in this case, a list
+                    progressDialog.dismiss();
+                    if (starships != null) {
+                        generateDataList(starships);
+                        if (!viewModel.paginationNext()) {
+                            binding.loadMore.setText(getString(R.string.end));
+                            binding.loadMore.setEnabled(false);
+                        }
+                    } else {
+                        onFailure();
+                    }
+                }
+            });
+        });
+
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
@@ -127,11 +175,10 @@ public class StarshipSearchFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, starshipList.size()));
-        // TODO -> Paginação
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
     }
 
-    public void onFailure(){
+    public void onFailure() {
         binding.clResult.setVisibility(View.GONE);
         binding.clFailure.setVisibility(View.VISIBLE);
     }

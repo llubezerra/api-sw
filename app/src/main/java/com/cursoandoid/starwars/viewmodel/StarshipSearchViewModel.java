@@ -31,4 +31,19 @@ public class StarshipSearchViewModel extends DefaultSearchViewModel {
         return dataList;
     }
 
+    @Override
+    public void callGetPaginationStarships(String url, Activity context) {
+        super.callGetPaginationStarships(url, context);
+    }
+
+    @Override
+    public Boolean enablePagination() {
+        return super.enablePagination();
+    }
+
+    @Override
+    public Boolean paginationNext() {
+        return super.paginationNext();
+    }
+
 }

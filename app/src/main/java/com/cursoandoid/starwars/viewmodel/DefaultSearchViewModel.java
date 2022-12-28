@@ -28,6 +28,8 @@ import retrofit2.Response;
 public class DefaultSearchViewModel extends ViewModel {
 
     ArrayList<SwapiObject> swapiObjects = new ArrayList<>();
+    Integer quantity;
+    String next;
 
     protected final MutableLiveData<List<SwapiObject>> dataList = new MutableLiveData<>();
 
@@ -62,6 +64,30 @@ public class DefaultSearchViewModel extends ViewModel {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Starships> call = service.getAllStarships();
         // O método do callback
+        call.enqueue(new Callback<Starships>() {
+            @Override
+            public void onResponse(Call<Starships> call, Response<Starships> response) {
+                if (response.body() != null) {
+                    parseStarshipsToSwapiObject(response.body(), context);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Starships> call, Throwable t) {
+                Log.d("LOG", "onFailure: " + t.getMessage());
+                dataList.setValue(null);
+            }
+
+        });
+    }
+
+    /** GET STARSHIPS PAGINATION */
+    protected void callGetPaginationStarships(String url, Activity context) {
+        // Create handle for the RetrofitInstance interface
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        //receber texto da Activity -> searchText
+        Call<Starships> call = service.getPageStarships(url);
+        //O método do callback
         call.enqueue(new Callback<Starships>() {
             @Override
             public void onResponse(Call<Starships> call, Response<Starships> response) {
@@ -176,6 +202,8 @@ public class DefaultSearchViewModel extends ViewModel {
 
     private void parseStarshipsToSwapiObject(Starships body, Activity context) {
         ArrayList<Starship> result = body.getResults();
+        quantity = body.getCount();
+        next = body.getNext();
 
         for (Starship starship : result) {
             SwapiObject swapiModel = new SwapiObject(
@@ -195,6 +223,8 @@ public class DefaultSearchViewModel extends ViewModel {
 
     private void parsePlanetsToSwapiObject(Planets body, Activity context) {
         ArrayList<Planet> result = body.getResults();
+        quantity = body.getCount();
+        next = body.getNext();
 
         for (Planet planet : result) {
             SwapiObject swapiModel = new SwapiObject(
@@ -212,6 +242,8 @@ public class DefaultSearchViewModel extends ViewModel {
 
     private void parseCharactersToSwapiObject(Characters body, Activity context) {
         ArrayList<Character> result = body.getResults();
+        quantity = body.getCount();
+        next = body.getNext();
 
         for (Character character : result) {
             SwapiObject swapiModel = new SwapiObject(
@@ -225,6 +257,18 @@ public class DefaultSearchViewModel extends ViewModel {
 
         }
         dataList.setValue(swapiObjects);
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    protected Boolean enablePagination() {
+        return quantity > 10;
+    }
+
+    protected Boolean paginationNext() {
+        return (next != null);
     }
 
 }

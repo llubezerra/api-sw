@@ -35,6 +35,8 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
     ProgressDialog progressDialog;
 
     String search;
+    String url;
+    Integer page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,11 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
             UtilsGeneric.hideKeyboard(this);
         });
 
+        binding.loadMore.setOnClickListener(v -> {
+                page++;
+                nextPage();
+        });
+
 //      newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
 
     }
@@ -91,6 +98,9 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
                 if(starships != null){
                     binding.clRecyclerSearch.setVisibility(View.VISIBLE);
                     generateDataList(starships);
+                    if(viewModel.enablePagination()){
+                        binding.loadMore.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     onFailure();
                 }
@@ -105,7 +115,42 @@ public class StarshipSearchActivity extends DefaultSearchActivity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.recyclerSearchList.setLayoutManager(layoutManager);
         binding.recyclerSearchList.setAdapter(adapter);
-        binding.textResults.setText(getString(R.string.results, adapter.getItemCount()));
+        binding.textResults.setText(getString(R.string.results, viewModel.getQuantity()));
+    }
+
+    private void nextPage() {
+
+        if(page == 1){
+            url = "https://swapi.dev/api/starships/?page=2";
+        } else if(page == 2){
+            url = "https://swapi.dev/api/starships/?page=3";
+        } else if(page == 3){
+            url = "https://swapi.dev/api/starships/?page=4";
+        }
+
+        //API CALL
+        viewModel.callGetPaginationStarships(url, this);
+
+        // Create the observer which updates the UI.
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.getDataListDone().observe(this, new Observer<List<SwapiObject>>() {
+            @Override
+            public void onChanged(List<SwapiObject> starships) {
+                // Update the UI, in this case, a list
+                progressDialog.dismiss();
+                if(starships != null){
+                    binding.clRecyclerSearch.setVisibility(View.VISIBLE);
+                    generateDataList(starships);
+                    if(!viewModel.paginationNext()){
+                        binding.loadMore.setText(getString(R.string.end));
+                        binding.loadMore.setEnabled(false);
+                    }
+                } else {
+                    onFailure();
+                }
+            }
+        });
+
     }
 
     public void onFailure(){

@@ -31,8 +31,8 @@
             android:id="@+id/cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_results">
@@ -48,10 +48,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingBottom="148dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerSearchList"
@@ -59,50 +59,27 @@
                         android:layout_height="match_parent"
                         android:isScrollContainer="false"
                         android:overScrollMode="never"
+                        app:layout_constraintBottom_toTopOf="@id/load_more"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/cl_buttons"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_buttons"
+                    <Button
+                        android:id="@+id/load_more"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="26dp"
+                        android:layout_marginHorizontal="48dp"
                         android:layout_marginTop="10dp"
-                        android:visibility="visible"
+                        android:background="@drawable/bg_search"
+                        android:fontFamily="@font/krungthep"
+                        android:text="@string/more"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="14sp"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recyclerSearchList">
-
-                        <Button
-                            android:id="@+id/previous"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_search"
-                            android:fontFamily="@font/roboto_regular"
-                            android:text="@string/previous"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <Button
-                            android:id="@+id/next"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_search"
-                            android:fontFamily="@font/roboto_regular"
-                            android:text="@string/next"
-                            android:textColor="@color/dark_gray"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toBottomOf="@id/recyclerSearchList" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
