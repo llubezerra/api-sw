@@ -1,5 +1,9 @@
 package com.cursoandoid.starwars.viewmodel;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 
@@ -18,8 +22,11 @@ import com.cursoandoid.starwars.model.Starships;
 import com.cursoandoid.starwars.model.SwapiObject;
 import com.cursoandoid.starwars.network.RetrofitClientInstance;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.SimpleFormatter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -285,11 +292,22 @@ public class DefaultSearchViewModel extends ViewModel {
         next = body.getNext();
 
         for (Character character : result) {
+
+            String newHeight;
+
+            if(character.getHeight().equals("unknown")){
+                newHeight = character.getHeight();
+            }else{
+                Long height = parseLong(character.getHeight());
+                DecimalFormat df = new DecimalFormat("#,##");
+                newHeight = df.format(height);
+            }
+
             SwapiObject swapiModel = new SwapiObject(
                     R.drawable.icon_circle_person,
                     R.drawable.person,
                     HtmlCompat.fromHtml(context.getString(R.string.name, character.getName()), HtmlCompat.FROM_HTML_MODE_LEGACY),
-                    HtmlCompat.fromHtml(context.getString(R.string.height, character.getHeight()), HtmlCompat.FROM_HTML_MODE_LEGACY),
+                    HtmlCompat.fromHtml(context.getString(R.string.height, newHeight), HtmlCompat.FROM_HTML_MODE_LEGACY),
                     HtmlCompat.fromHtml(context.getString(R.string.eyes_color, character.getEyeColor()), HtmlCompat.FROM_HTML_MODE_COMPACT)
             );
             swapiObjects.add(swapiModel);

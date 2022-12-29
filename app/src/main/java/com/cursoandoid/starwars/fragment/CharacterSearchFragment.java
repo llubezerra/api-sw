@@ -73,6 +73,9 @@ public class CharacterSearchFragment extends Fragment {
                 progressDialog.dismiss();
                 if (characters != null) {
                     generateDataList(characters);
+                    if (viewModel.enablePagination()) {
+                        binding.loadMore.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     onFailure();
                 }
